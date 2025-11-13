@@ -1,0 +1,198 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/npm
+1 info using npm@11.5.1
+2 info using node@v24.7.0
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm install telebirr-receipt
+7 verbose argv "install" "telebirr-receipt"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2025-10-10T12_49_21_655Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2025-10-10T12_49_21_655Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 silly packumentCache heap:1074003968 maxSize:268500992 maxEntrySize:134250496
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly fetch manifest telebirr-receipt@*
+15 silly packumentCache full:https://registry.npmjs.org/telebirr-receipt cache-miss
+16 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+17 http fetch GET 200 https://registry.npmjs.org/telebirr-receipt 1523ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/telebirr-receipt set size:undefined disposed:false
+19 silly placeDep ROOT telebirr-receipt@0.0.1 OK for: top-bingo@1.0.0 want: *
+20 silly fetch manifest htmlparser2@^9.0.0
+21 silly packumentCache full:https://registry.npmjs.org/htmlparser2 cache-miss
+22 http fetch GET 200 https://registry.npmjs.org/htmlparser2 122ms (cache miss)
+23 silly packumentCache full:https://registry.npmjs.org/htmlparser2 set size:undefined disposed:false
+24 silly placeDep ROOT htmlparser2@9.1.0 OK for: telebirr-receipt@0.0.1 want: ^9.0.0
+25 silly fetch manifest domutils@^3.1.0
+26 silly packumentCache full:https://registry.npmjs.org/domutils cache-miss
+27 silly fetch manifest entities@^4.5.0
+28 silly packumentCache full:https://registry.npmjs.org/entities cache-miss
+29 silly fetch manifest domhandler@^5.0.3
+30 silly packumentCache full:https://registry.npmjs.org/domhandler cache-miss
+31 silly fetch manifest domelementtype@^2.3.0
+32 silly packumentCache full:https://registry.npmjs.org/domelementtype cache-miss
+33 http fetch GET 200 https://registry.npmjs.org/domutils 122ms (cache miss)
+34 silly packumentCache full:https://registry.npmjs.org/domutils set size:undefined disposed:false
+35 http fetch GET 200 https://registry.npmjs.org/domhandler 695ms (cache miss)
+36 silly packumentCache full:https://registry.npmjs.org/domhandler set size:undefined disposed:false
+37 http fetch GET 200 https://registry.npmjs.org/domelementtype 762ms (cache miss)
+38 silly packumentCache full:https://registry.npmjs.org/domelementtype set size:undefined disposed:false
+39 http fetch GET 200 https://registry.npmjs.org/entities 868ms (cache miss)
+40 silly packumentCache full:https://registry.npmjs.org/entities set size:undefined disposed:false
+41 silly placeDep ROOT domelementtype@2.3.0 OK for: htmlparser2@9.1.0 want: ^2.3.0
+42 silly placeDep ROOT domhandler@5.0.3 OK for: htmlparser2@9.1.0 want: ^5.0.3
+43 silly placeDep ROOT domutils@3.2.2 OK for: htmlparser2@9.1.0 want: ^3.1.0
+44 silly placeDep ROOT entities@4.5.0 OK for: htmlparser2@9.1.0 want: ^4.5.0
+45 silly fetch manifest dom-serializer@^2.0.0
+46 silly packumentCache full:https://registry.npmjs.org/dom-serializer cache-miss
+47 http fetch GET 200 https://registry.npmjs.org/dom-serializer 112ms (cache miss)
+48 silly packumentCache full:https://registry.npmjs.org/dom-serializer set size:undefined disposed:false
+49 silly placeDep ROOT dom-serializer@2.0.0 OK for: domutils@3.2.2 want: ^2.0.0
+50 silly reify moves {}
+51 silly audit bulk request {
+51 silly audit   accepts: [ '1.3.8' ],
+51 silly audit   anymatch: [ '3.1.3' ],
+51 silly audit   'array-flatten': [ '1.1.1' ],
+51 silly audit   'balanced-match': [ '1.0.2' ],
+51 silly audit   'binary-extensions': [ '2.3.0' ],
+51 silly audit   'body-parser': [ '1.20.3' ],
+51 silly audit   'brace-expansion': [ '1.1.12' ],
+51 silly audit   braces: [ '3.0.3' ],
+51 silly audit   bytes: [ '3.1.2' ],
+51 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+51 silly audit   'call-bound': [ '1.0.4' ],
+51 silly audit   chokidar: [ '3.6.0' ],
+51 silly audit   'concat-map': [ '0.0.1' ],
+51 silly audit   'content-disposition': [ '0.5.4' ],
+51 silly audit   'content-type': [ '1.0.5' ],
+51 silly audit   cookie: [ '0.7.1' ],
+51 silly audit   'cookie-signature': [ '1.0.6' ],
+51 silly audit   debug: [ '2.6.9', '4.4.3' ],
+51 silly audit   depd: [ '2.0.0' ],
+51 silly audit   destroy: [ '1.2.0' ],
+51 silly audit   'dunder-proto': [ '1.0.1' ],
+51 silly audit   'ee-first': [ '1.1.1' ],
+51 silly audit   encodeurl: [ '2.0.0', '1.0.2' ],
+51 silly audit   'es-define-property': [ '1.0.1' ],
+51 silly audit   'es-errors': [ '1.3.0' ],
+51 silly audit   'es-object-atoms': [ '1.1.1' ],
+51 silly audit   'escape-html': [ '1.0.3' ],
+51 silly audit   etag: [ '1.8.1' ],
+51 silly audit   express: [ '4.21.2' ],
+51 silly audit   'fill-range': [ '7.1.1' ],
+51 silly audit   finalhandler: [ '1.3.1' ],
+51 silly audit   forwarded: [ '0.2.0' ],
+51 silly audit   fresh: [ '0.5.2' ],
+51 silly audit   fsevents: [ '2.3.3' ],
+51 silly audit   'function-bind': [ '1.1.2' ],
+51 silly audit   'get-intrinsic': [ '1.3.0' ],
+51 silly audit   'get-proto': [ '1.0.1' ],
+51 silly audit   'glob-parent': [ '5.1.2' ],
+51 silly audit   gopd: [ '1.2.0' ],
+51 silly audit   'has-flag': [ '3.0.0' ],
+51 silly audit   'has-symbols': [ '1.1.0' ],
+51 silly audit   hasown: [ '2.0.2' ],
+51 silly audit   'http-errors': [ '2.0.0' ],
+51 silly audit   'iconv-lite': [ '0.4.24' ],
+51 silly audit   'ignore-by-default': [ '1.0.1' ],
+51 silly audit   inherits: [ '2.0.4' ],
+51 silly audit   'ipaddr.js': [ '1.9.1' ],
+51 silly audit   'is-binary-path': [ '2.1.0' ],
+51 silly audit   'is-extglob': [ '2.1.1' ],
+51 silly audit   'is-glob': [ '4.0.3' ],
+51 silly audit   'is-number': [ '7.0.0' ],
+51 silly audit   lowdb: [ '6.1.1' ],
+51 silly audit   'math-intrinsics': [ '1.1.0' ],
+51 silly audit   'media-typer': [ '0.3.0' ],
+51 silly audit   'merge-descriptors': [ '1.0.3' ],
+51 silly audit   methods: [ '1.1.2' ],
+51 silly audit   mime: [ '1.6.0' ],
+51 silly audit   'mime-db': [ '1.52.0' ],
+51 silly audit   'mime-types': [ '2.1.35' ],
+51 silly audit   minimatch: [ '3.1.2' ],
+51 silly audit   ms: [ '2.0.0', '2.1.3' ],
+51 silly audit   negotiator: [ '0.6.3' ],
+51 silly audit   nodemon: [ '3.1.10' ],
+51 silly audit   'normalize-path': [ '3.0.0' ],
+51 silly audit   'object-inspect': [ '1.13.4' ],
+51 silly audit   'on-finished': [ '2.4.1' ],
+51 silly audit   parseurl: [ '1.3.3' ],
+51 silly audit   'path-to-regexp': [ '0.1.12' ],
+51 silly audit   picomatch: [ '2.3.1' ],
+51 silly audit   'proxy-addr': [ '2.0.7' ],
+51 silly audit   'pstree.remy': [ '1.1.8' ],
+51 silly audit   qs: [ '6.13.0' ],
+51 silly audit   'range-parser': [ '1.2.1' ],
+51 silly audit   'raw-body': [ '2.5.2' ],
+51 silly audit   readdirp: [ '3.6.0' ],
+51 silly audit   'safe-buffer': [ '5.2.1' ],
+51 silly audit   'safer-buffer': [ '2.1.2' ],
+51 silly audit   semver: [ '7.7.2' ],
+51 silly audit   send: [ '0.19.0' ],
+51 silly audit   'serve-static': [ '1.16.2' ],
+51 silly audit   setprototypeof: [ '1.2.0' ],
+51 silly audit   'side-channel': [ '1.1.0' ],
+51 silly audit   'side-channel-list': [ '1.0.0' ],
+51 silly audit   'side-channel-map': [ '1.0.1' ],
+51 silly audit   'side-channel-weakmap': [ '1.0.2' ],
+51 silly audit   'simple-update-notifier': [ '2.0.0' ],
+51 silly audit   statuses: [ '2.0.1' ],
+51 silly audit   steno: [ '3.2.0' ],
+51 silly audit   'supports-color': [ '5.5.0' ],
+51 silly audit   'to-regex-range': [ '5.0.1' ],
+51 silly audit   toidentifier: [ '1.0.1' ],
+51 silly audit   touch: [ '3.1.1' ],
+51 silly audit   'type-is': [ '1.6.18' ],
+51 silly audit   undefsafe: [ '2.0.5' ],
+51 silly audit   unpipe: [ '1.0.0' ],
+51 silly audit   'utils-merge': [ '1.0.1' ],
+51 silly audit   uuid: [ '9.0.1' ],
+51 silly audit   vary: [ '1.1.2' ],
+51 silly audit   ws: [ '8.18.3' ],
+51 silly audit   'telebirr-receipt': [ '0.0.1' ],
+51 silly audit   htmlparser2: [ '9.1.0' ],
+51 silly audit   domelementtype: [ '2.3.0' ],
+51 silly audit   domhandler: [ '5.0.3' ],
+51 silly audit   domutils: [ '3.2.2' ],
+51 silly audit   entities: [ '4.5.0' ],
+51 silly audit   'dom-serializer': [ '2.0.0' ]
+51 silly audit }
+52 verbose reify failed optional dependency /data/data/com.termux/files/home/node_modules/fsevents
+53 silly reify mark deleted [ '/data/data/com.termux/files/home/node_modules/fsevents' ]
+54 http cache domutils@https://registry.npmjs.org/domutils/-/domutils-3.2.2.tgz 1ms (cache hit)
+55 http cache dom-serializer@https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz 0ms (cache hit)
+56 http cache entities@https://registry.npmjs.org/entities/-/entities-4.5.0.tgz 0ms (cache hit)
+57 http cache domhandler@https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz 0ms (cache hit)
+58 http cache domelementtype@https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz 0ms (cache hit)
+59 http cache htmlparser2@https://registry.npmjs.org/htmlparser2/-/htmlparser2-9.1.0.tgz 0ms (cache hit)
+60 http cache telebirr-receipt@https://registry.npmjs.org/telebirr-receipt/-/telebirr-receipt-0.0.1.tgz 0ms (cache hit)
+61 silly tarball no local data for domutils@https://registry.npmjs.org/domutils/-/domutils-3.2.2.tgz. Extracting by manifest.
+62 silly tarball no local data for dom-serializer@https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz. Extracting by manifest.
+63 silly tarball no local data for entities@https://registry.npmjs.org/entities/-/entities-4.5.0.tgz. Extracting by manifest.
+64 silly tarball no local data for domhandler@https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz. Extracting by manifest.
+65 silly tarball no local data for domelementtype@https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz. Extracting by manifest.
+66 silly tarball no local data for htmlparser2@https://registry.npmjs.org/htmlparser2/-/htmlparser2-9.1.0.tgz. Extracting by manifest.
+67 silly tarball no local data for telebirr-receipt@https://registry.npmjs.org/telebirr-receipt/-/telebirr-receipt-0.0.1.tgz. Extracting by manifest.
+68 http fetch GET 200 https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz 289ms (cache miss)
+69 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 406ms
+70 silly audit report {}
+71 http fetch GET 200 https://registry.npmjs.org/domutils/-/domutils-3.2.2.tgz 450ms (cache miss)
+72 http fetch GET 200 https://registry.npmjs.org/entities/-/entities-4.5.0.tgz 463ms (cache miss)
+73 http fetch GET 200 https://registry.npmjs.org/htmlparser2/-/htmlparser2-9.1.0.tgz 644ms (cache miss)
+74 http fetch GET 200 https://registry.npmjs.org/telebirr-receipt/-/telebirr-receipt-0.0.1.tgz 1321ms (cache miss)
+75 http fetch GET 200 https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz 2652ms (cache miss)
+76 http fetch GET 200 https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz 2690ms (cache miss)
+77 silly ADD node_modules/dom-serializer
+78 silly ADD node_modules/entities
+79 silly ADD node_modules/domutils
+80 silly ADD node_modules/domhandler
+81 silly ADD node_modules/domelementtype
+82 silly ADD node_modules/htmlparser2
+83 silly ADD node_modules/telebirr-receipt
+84 silly ADD node_modules/fsevents
+85 verbose cwd /data/data/com.termux/files/home
+86 verbose os Linux 4.9.148
+87 verbose node v24.7.0
+88 verbose npm  v11.5.1
+89 verbose exit 0
+90 info ok

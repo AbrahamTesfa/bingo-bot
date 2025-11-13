@@ -1,0 +1,631 @@
+// ----- Imports -----
+const express = require("express");
+const http = require("http");
+const WebSocket = require("ws");
+const path = require("path");
+const https = require('https');
+const { receipt, utils: { loadReceipt, parseFromHTML } } = require('telebirr-receipt');
+const { v4: uuid } = require("uuid");
+const { Low } = require("lowdb");
+const { JSONFile } = require("lowdb/node");
+const fs = require('fs');
+let fixedCardsSet = [];
+// ----- Lowdb Setup -----
+const adapter = new JSONFile("bingo.json");
+const db = new Low(adapter, { rooms: [], players: [], requests: [] });
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
+async function verifyTelebirrReceipt(transactionNumber, expectedTo, expectedAmount) {
+  try {
+    // Remove 'agent' option to use default trusted CAs
+    const html = await loadReceipt({ receiptNo: transactionNumber });
+    const r = receipt(parseFromHTML(html), { to: expectedTo, amount: expectedAmount.toString() });
+
+    let verified = false;
+    r.verify((parsed, reference) => {
+      verified = parsed.amount === expectedAmount && r.equals(parsed.to, reference.to);
+    });
+
+    return verified;
+  } catch (error) {
+    console.error('Error verifying Telebirr receipt:', error);
+    return false;
+  }
+}
+
+
+
+function parseTelebirrMessage(message) {
+  if (!message) return { amount: null, transactionNumber: null };
+
+  const amountMatch = message.match(/ETBs*([d,.]+)/i);
+  const txnMatch = message.match(/transaction number iss*([A-Za-z0-9]+)/i);
+
+  return {
+    amount: amountMatch ? parseFloat(amountMatch[1].replace(/,/g, '')) : null,
+    transactionNumber: txnMatch ? txnMatch[1] : null
+  };
+}
+// ----- Initialize DB -----
+async function initDB() {
+  await db.read();
+
+  if (!db.data.rooms || db.data.rooms.length === 0) {
+    db.data.rooms = [
+      { roomId: "room_10", cost: 10, jackpot: 0, numbersCalled: [], gameStarted: 0, currentCountdown: 60 },
+      { roomId: "room_20", cost: 20, jackpot: 0, numbersCalled: [], gameStarted: 0, currentCountdown: 60 },
+      { roomId: "room_50", cost: 50, jackpot: 0, numbersCalled: [], gameStarted: 0, currentCountdown: 60 },
+      { roomId: "room_100", cost: 100, jackpot: 0, numbersCalled: [], gameStarted: 0, currentCountdown: 60 },
+    ];
+  }
+
+  if (!db.data.players) db.data.players = [];
+
+  await db.write();
+  
+}
+
+function loadFixedCards() {
+  try {
+    const data = fs.readFileSync('fixed_bingo_cards.json', 'utf-8');
+    fixedCardsSet = JSON.parse(data);
+    console.log(`Loaded ${fixedCardsSet.length} fixed bingo cards`);
+  } catch (err) {
+    console.error('Failed to load fixed bingo cards:', err);
+  }
+}
+// ----- Express + WebSocket -----
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+// ----- In-memory rooms -----
+const rooms = {};
+const players = new Map(); // ws -> player info
+
+// ----- Load rooms into memory -----
+async function loadRooms() {
+  await db.read();
+  db.data.rooms.forEach(r => {
+    rooms[r.roomId] = {
+      players: [],
+      cards: fixedCardsSet.map((data, idx) => ({
+        id: idx + 1,
+        data,
+        takenBy: null
+      })),
+      gameStarted: !!r.gameStarted,
+      numbersCalled: r.numbersCalled || [],
+      cost: r.cost,
+      jackpot: r.jackpot,
+      gameInterval: null,
+      countdown: null,
+      countdownTime: r.currentCountdown || 60,
+      currentCountdown: r.currentCountdown || 60,
+    };
+  });
+}
+
+// ----- Card Sending -----
+
+function sendRoomCards(ws, roomId, phase = "selection") {
+  const room = rooms[roomId];
+  if (!room) return;
+
+  if (phase === "selection") {
+    // Only send card IDs for selection phase
+    ws.send(JSON.stringify({
+      type: "show_cards",
+      phase: "selection",
+      roomId,
+      allCards: room.cards.map(c => ({
+        id: c.id,
+        takenBy: c.takenBy
+      }))
+    }));
+  } else if (phase === "game") {
+    // Send the player's actual cards (with full 5x5 numbers)
+    ws.send(JSON.stringify({
+      type: "show_cards",
+      phase: "game",
+      roomId,
+      cards: ws.cards // ws.cards contains full formatted 5x5 grids
+    }));
+  }
+}
+
+function formatCardForClient(card) {
+  // card.data is flat 25 elements (see generateBingoCard)
+  // Convert values to numeric when possible; ensure free cell becomes 0.
+  const sliceToNums = (arr) => arr.map(n => (n === "FREE" || n === null || n === undefined) ? 0 : Number(n));
+
+  const B = sliceToNums(card.data.slice(0, 5));
+  const I = sliceToNums(card.data.slice(5, 10));
+  const N = sliceToNums(card.data.slice(10, 15));
+  const G = sliceToNums(card.data.slice(15, 20));
+  const O = sliceToNums(card.data.slice(20, 25));
+
+  return { B, I, N, G, O }; // client expects this shape
+}
+// ----- Utilities -----
+function calcJackpot(room) {
+  return Math.floor(room.players.length * room.cost * 0.9);
+}
+
+function generateBingoCard() {
+  const card = [];
+  const columns = { B: [1, 15], I: [16, 30], N: [31, 45], G: [46, 60], O: [61, 75] };
+
+  for (const [_, [min, max]] of Object.entries(columns)) {
+    const nums = [];
+    while (nums.length < 5) {
+      const n = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (!nums.includes(n)) nums.push(n);
+    }
+    card.push(...nums);
+  }
+
+  // center free cell should be numeric 0 so checkBingo/extractWinningPattern work
+  card[12] = 0;
+  return card; // flat 25-element array: B[0..4], I[0..4], N[0..4], G[0..4], O[0..4]
+}
+function generateRoomCards() {
+  return Array.from({ length: 100 }, (_, i) => ({ id: i + 1, data: generateBingoCard(), takenBy: null }));
+}
+
+function updateRoomStatus() {
+  const status = {};
+  for (const id in rooms) {
+    const room = rooms[id];
+    status[id] = {
+      players: room.players.length,
+      jackpot: calcJackpot(room),
+      cost: room.cost,
+      gameStarted: room.gameStarted,
+      calledNumbersCount: room.numbersCalled.length,
+    };
+  }
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ type: "room_status_update", room_status: status }));
+    }
+  });
+}
+
+// ----- Broadcast helper -----
+function broadcastToRoom(roomId, message) {
+  const room = rooms[roomId];
+  if (!room) return;
+
+  room.players.forEach(ws => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(message));
+    }
+  });
+}
+
+function checkBingo(card, numbersCalled) {
+  const BINGO = ["B", "I", "N", "G", "O"];
+  const isLineMarked = line => line.every(num => num === 0 || numbersCalled.includes(num));
+
+  // Rows
+  for (let i = 0; i < 5; i++) if (isLineMarked(BINGO.map(l => card[l][i]))) return true;
+  // Columns
+  for (const l of BINGO) if (isLineMarked(card[l])) return true;
+  // Diagonals
+  const diag1 = BINGO.map((l, i) => card[l][i]);
+  const diag2 = BINGO.map((l, i) => card[BINGO[4 - i]][i]);
+  return isLineMarked(diag1) || isLineMarked(diag2);
+}
+
+function extractWinningPattern(card, numbersCalled) {
+  const BINGO = ["B", "I", "N", "G", "O"];
+
+  for (let row = 0; row < 5; row++) {
+    const rowNums = BINGO.map(l => card[l][row]);
+    if (rowNums.every(n => n === 0 || numbersCalled.includes(n))) return rowNums.map((num, col) => [row, col]);
+  }
+
+  for (let col = 0; col < 5; col++) {
+    const colNums = BINGO.map(l => card[l][col]);
+    if (colNums.every(n => n === 0 || numbersCalled.includes(n))) return colNums.map((num, row) => [row, col]);
+  }
+
+  const diag1 = BINGO.map((l, i) => card[l][i]);
+  if (diag1.every(n => n === 0 || numbersCalled.includes(n))) return diag1.map((num, i) => [i, i]);
+
+  const diag2 = BINGO.map((l, i) => card[BINGO[4 - i]][i]);
+  if (diag2.every(n => n === 0 || numbersCalled.includes(n))) return diag2.map((num, i) => [i, 4 - i]);
+
+  return null;
+}
+
+// ----- Game Loop -----
+
+function startGame(roomId) {
+const room = rooms[roomId];
+if (!room || room.gameStarted) return;
+
+room.gameStarted = true;
+room.numbersCalled = [];
+
+const availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1);
+
+room.gameInterval = setInterval(() => {
+if (!availableNumbers.length || !room.players.length) {
+clearInterval(room.gameInterval);
+room.gameStarted = false;
+room.players.forEach(p => p.send(JSON.stringify({ type: "game_end" })));
+return;
+}
+
+const num = availableNumbers.splice(Math.floor(Math.random() * availableNumbers.length), 1)[0];  
+room.numbersCalled.push(num);  
+
+room.players.forEach(p => {  
+  if (p.readyState === WebSocket.OPEN) {  
+    p.send(JSON.stringify({  
+      type: "number_called",  
+      number: num,  
+      calledNumbers: room.numbersCalled,  
+      countdown: false  
+    }));  
+  }  
+});
+
+}, 3000);
+}
+
+
+    
+      
+function startRoomCountdown(roomId) {
+  const room = rooms[roomId];
+  if (!room) return;
+
+  let countdownTime = room.countdownTime || 60;
+  room.countdown = setInterval(() => {
+    // Broadcast countdown value
+    broadcastToRoom(roomId, {
+      type: "countdown",
+      roomId,
+      timeLeft: countdownTime
+    });
+
+    countdownTime--;
+
+    if (countdownTime < 0) {
+      clearInterval(room.countdown);
+      room.countdown = null;
+
+      startGame(roomId);
+    }
+  }, 1000);
+
+  // Send full cards immediately to all players for review before game start
+  room.players.forEach(ws => {
+    const assignedCards = room.cards.filter(c => c.takenBy === ws.userId);
+    ws.cards = assignedCards.map(c => formatCardForClient(c));
+    ws.send(JSON.stringify({
+      type: "show_cards",
+      phase: "review",  // new phase to indicate review before start
+      roomId,
+      cards: ws.cards
+    }));
+  });
+}
+          
+// ----- WebSocket -----
+wss.on("connection", ws => {
+  ws.id = uuid();
+  console.log(`Client connected: ${ws.id}`);
+
+  ws.on("message", async msg => {
+    let data;
+    try { data = JSON.parse(msg); } catch { return; }
+
+    switch (data.type) {
+      case "get_player_data": {
+        await db.read();
+        let user = db.data.players.find(u => u.userId === data.userId);
+        if (!user) {
+          user = { userId: data.userId, username: `Player_${data.userId}`, balance: 1000, wins: 0, gamesPlayed: 0 };
+          db.data.players.push(user);
+          await db.write();
+        }
+        ws.userId = data.userId;
+        ws.send(JSON.stringify({ type: "player_data", ...user }));
+        break;
+      }
+
+      case "join_room": {
+  const { roomId, userId } = data;
+  const room = rooms[roomId];
+  if (!room) break;
+
+  room.players.push(ws);
+
+  // Send all cards for selection
+  ws.send(JSON.stringify({
+    type: "room_joined",
+    roomId,
+    playerId: userId,
+    allCards: room.cards.map(c => ({
+      id: c.id,
+      takenBy: c.takenBy
+    }))
+  }));
+
+  break;
+}
+  // Send card IDs and takenBy for selection pha        
+
+      case "get_cards": {
+  const { roomId } = data;
+  const room = rooms[roomId];
+  if (!room) break;
+
+  // Send all cards (id + takenBy) for selection
+  ws.send(JSON.stringify({
+    type: "room_cards",
+    roomId,
+    cards: room.cards.map(c => ({
+      id: c.id,
+      takenBy: c.takenBy || null
+    }))
+  }));
+  break;
+}
+
+      case "select_card": {
+  const room = rooms[data.roomId];
+  if (!room) break;
+
+  const card = room.cards.find(c => c.id === data.cardId);
+  if (!card) {
+    ws.send(JSON.stringify({ type: "card_rejected", reason: "Card not found" }));
+    break;
+  }
+
+  if (card.takenBy && card.takenBy !== data.userId) {
+    ws.send(JSON.stringify({ type: "card_rejected", reason: "Already taken" }));
+    break;
+  }
+
+  const userCards = room.cards.filter(c => c.takenBy === data.userId);
+  if (userCards.length >= 4) {
+    ws.send(JSON.stringify({ type: "card_rejected", reason: "Max 4 cards reached" }));
+    break;
+  }
+
+  // Assign the card to the user
+  card.takenBy = data.userId;
+  if (!ws.cards) ws.cards = [];
+  const formatted = formatCardForClient(card);
+  ws.cards.push(formatted);
+
+  // ✅ Notify only about this card being selected
+  ws.send(JSON.stringify({
+    type: "card_selected",
+    roomId: data.roomId,
+    cardId: card.id,
+    userId: data.userId
+  }));
+
+  // ✅ Notify everyone else that this card is now taken
+  room.players.forEach(p => {
+    if (p.readyState === WebSocket.OPEN) {
+      p.send(JSON.stringify({
+        type: "card_taken",
+        roomId: data.roomId,
+        cardId: card.id,
+        userId: data.userId
+      }));
+    }
+  });
+
+  updateRoomStatus();
+  break;
+}
+  
+        case "claim_bingo": {
+        const room = rooms[data.roomId];
+        if (!room) return;
+
+        const player = room.players.find(p => p.id === data.playerId);
+        if (!player) return;
+
+        let winningCard = null;
+        let winningPattern = null;
+
+        for (const card of player.cards) {
+          if (checkBingo(card, room.numbersCalled)) {
+            winningCard = card;
+            winningPattern = extractWinningPattern(card, room.numbersCalled);
+            break;
+          }
+        }
+
+        if (winningCard) {
+          const jackpot = calcJackpot(room);
+          await db.read();
+          const user = db.data.players.find(u => u.userId === player.userId);
+          if (user) {
+            user.balance += jackpot;
+            user.wins++;
+            await db.write();
+          }
+
+          room.players.forEach(p => p.send(JSON.stringify({
+            type: "bingo_win",
+            winnerId: player.id,
+            winnerCard,
+            winningPattern
+          })));
+
+          clearInterval(room.gameInterval);
+          room.gameStarted = false;
+          room.players.forEach(p => p.send(JSON.stringify({ type: "game_end" })));
+          room.numbersCalled = [];
+          updateRoomStatus();
+        } else {
+          ws.send(JSON.stringify({ type: "invalid_bingo" }));
+        }
+
+        break;
+      }
+      
+      case "start_game": {
+  const { roomId, userId } = data;
+  const room = rooms[roomId];
+  if (!room) return;
+
+  // Ensure the player actually has cards selected
+  const playerCards = room.cards.filter(c => c.takenBy === userId);
+  if (!playerCards.length) {
+    ws.send(JSON.stringify({
+      type: "error",
+      message: "No cards selected"
+    }));
+    return;
+  }
+
+  // 💰 Deduct balance before countdown
+  await db.read();
+  const user = db.data.players.find(u => u.userId === userId);
+  if (user) {
+    if (user.balance >= room.cost) {
+      user.balance -= room.cost;
+      await db.write();
+      ws.send(JSON.stringify({ type: "balance_update", newBalance: user.balance }));
+    } else {
+      ws.send(JSON.stringify({ type: "error", message: "Insufficient balance to start game" }));
+      return;
+    }
+  }
+
+  // Store formatted version for this player
+  ws.cards = playerCards.map(c => formatCardForClient(c));
+
+  // Notify this player immediately with their real bingo cards
+  ws.send(JSON.stringify({
+    type: "show_cards",
+    phase: "game",
+    roomId,
+    cards: ws.cards
+  }));
+
+  // If countdown hasn't started yet, start it now for the entire room
+  if (!room.gameStarted && !room.countdown) {
+    startRoomCountdown(roomId);
+  }
+
+  break;
+}
+
+        case "request_deposit": {
+  const { amount: parsedAmount, transactionNumber: parsedTransactionNumber } = parseTelebirrMessage(data.telebirrMessage || "");
+
+  const req = {
+    id: uuid(),
+    userId: data.userId,
+    type: "deposit",
+    amount: parsedAmount ?? data.amount,
+    telebirrMessage: data.telebirrMessage || "",
+    telebirrTransactionNumber: parsedTransactionNumber || data.telebirrTransactionNumber || "",
+    status: "pending"
+  };
+
+  await db.read();
+  db.data.requests.push(req);
+  await db.write();
+
+  // Automatically verify and credit the deposit
+  const verified = await verifyTelebirrReceipt(
+    req.telebirrTransactionNumber,
+    "NATNAEL GIRMA",
+    req.amount
+  );
+
+  if (verified) {
+    req.status = "approved";
+    const user = db.data.players.find(u => u.userId === req.userId);
+    if (user) {
+      user.balance += req.amount;
+      await db.write();
+    }
+  } else {
+    req.status = "requires_manual_review"; // fallback for manual review
+    await db.write();
+  }
+
+  // Notify user about status and balance update
+  ws.send(JSON.stringify({ type: "request_status_update", ...req }));
+  ws.send(JSON.stringify({ type: "balance_update", newBalance: user.balance }));
+
+  break;
+}
+        case "get_admin_requests": {
+        await db.read();
+        ws.send(JSON.stringify({ type: "requests_data", requests: db.data.requests }));
+        break;
+      }
+
+      case "approve_request":
+case "reject_request": {
+  await db.read();
+  const req = db.data.requests.find(r => r.id === data.requestId);
+  if (!req) return;
+
+  // Only process approval/rejection for withdrawal requests
+  if (req.type === "withdrawal") {
+    req.status = data.type === "approve_request" ? "approved" : "rejected";
+
+    // Update user balance on approval/rejection
+    if (req.status === "approved") {
+      const user = db.data.players.find(u => u.userId === req.userId);
+      if (user) {
+        if (req.type === "withdrawal") {
+          user.balance -= req.amount;
+        }
+        await db.write();
+      }
+    }
+
+    await db.write();
+} // <-- end of case block
+
+    } // <-- close switch statement
+
+  }); // <-- close    ws.send(JSON.stringify({ type: "request_action_success" }));
+  } else {
+    // For deposit requests, no manual approval or rejection
+    ws.send(JSON.stringify({ type: "error", message: "Deposit requests do not require approval." }));
+  }
+  break;
+}
+     
+  ws.on("close", () => {
+    const player = players.get(ws);
+    if (player && player.roomId) {
+      const room = rooms[player.roomId];
+      room.players = room.players.filter(p => p.id !== ws.id);
+      updateRoomStatus();
+    }
+    players.delete(ws);
+  });
+});
+
+// ----- Serve frontend -----
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// ----- Start server -----
+(async () => {
+  await initDB();
+  loadFixedCards();
+  await loadRooms();
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+})();

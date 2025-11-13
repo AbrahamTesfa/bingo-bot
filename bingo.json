@@ -1,0 +1,809 @@
+{
+  "rooms": [
+    {
+      "roomId": "room_10",
+      "cost": 10,
+      "jackpot": 0,
+      "numbersCalled": [],
+      "gameStarted": 0,
+      "currentCountdown": 60
+    },
+    {
+      "roomId": "room_20",
+      "cost": 20,
+      "jackpot": 0,
+      "numbersCalled": [],
+      "gameStarted": 0,
+      "currentCountdown": 60
+    },
+    {
+      "roomId": "room_50",
+      "cost": 50,
+      "jackpot": 0,
+      "numbersCalled": [],
+      "gameStarted": 0,
+      "currentCountdown": 60
+    },
+    {
+      "roomId": "room_100",
+      "cost": 100,
+      "jackpot": 0,
+      "numbersCalled": [],
+      "gameStarted": 0,
+      "currentCountdown": 60
+    }
+  ],
+  "players": [
+    {
+      "userId": "u1",
+      "username": "Phone_1",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "u2",
+      "username": "Phone_2",
+      "balance": 800,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "u3",
+      "username": "Phone_3",
+      "balance": 206,
+      "wins": 16,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "user_qkrgub3vo",
+      "username": "Player_user_qkrgub3vo",
+      "balance": 295,
+      "wins": 9,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "user_608",
+      "username": "Player_user_608",
+      "balance": 680,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "admin1",
+      "username": "Admin",
+      "balance": 0,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "admin1",
+      "username": "Admin",
+      "balance": 0,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "userId": "admin_001",
+      "username": "Admin",
+      "balance": 0,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "0912735322",
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "0912735222",
+      "username": "Admin",
+      "balance": 1053,
+      "wins": 6,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": null,
+      "username": "Player_null",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "null",
+      "username": "Player_null",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "0922744350",
+      "username": "Player_0922744350",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": [
+        "0912735222"
+      ],
+      "username": "Admin",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "0923119628",
+      "username": "Player_0923119628",
+      "balance": 1300,
+      "wins": 0,
+      "gamesPlayed": 0
+    },
+    {
+      "phone": "0923119638",
+      "username": "Player_0923119638",
+      "balance": 1000,
+      "wins": 0,
+      "gamesPlayed": 0
+    }
+  ],
+  "requests": [
+    {
+      "id": "fb719ac2-58c6-4580-9835-d53e985c50a5",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 100,
+      "status": "approved"
+    },
+    {
+      "id": "c28ef3ca-66a5-4f72-a673-a5c3ef857c85",
+      "userId": "u3",
+      "type": "deposit",
+      "amount": 100,
+      "status": "pending"
+    },
+    {
+      "id": "8dfe6596-a5d3-4473-88dd-89aeee32d6ed",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 100,
+      "status": "pending"
+    },
+    {
+      "id": "d9a310d2-eb92-4fd8-8f66-9699701707f0",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 500,
+      "status": "pending"
+    },
+    {
+      "id": "39d2b166-8f81-4e70-aede-32e121ff4a22",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 100,
+      "status": "pending"
+    },
+    {
+      "id": "6363ef57-3467-4e3d-9e17-53a2e5567109",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 150,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 150.00 to NATNAEL GIRMA (2519****4350) on 09/10/2025 19:09:52. Your transaction number is CJ90DLPKBK. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 27.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ90DLPKBK.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "pending"
+    },
+    {
+      "id": "f40ef798-cba7-4395-b464-2d7e4d552d21",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 150,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "pending"
+    },
+    {
+      "id": "62efea37-a3a5-47b8-b71b-032a090b92ce",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 100,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "pending"
+    },
+    {
+      "id": "2871f8bb-84ae-41e3-9a15-d2554516d100",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 150,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "pending"
+    },
+    {
+      "id": "28950c28-85e9-4dca-98b5-86f0023b971c",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 150,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "pending"
+    },
+    {
+      "id": "dc30ee92-df4d-45c8-9b36-be9ac8b15196",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 300,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 300.00 to NATNAEL GIRMA (2519****4350) on 12/10/2025 15:08:58. Your transaction number is CJC2FG7MTI. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 30.65. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJC2FG7MTI.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "",
+      "status": "requires_manual_review"
+    },
+    {
+      "id": "000eade5-7be3-484b-89d6-1b0acc1ee7b6",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 200,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJ98DM9ZL8",
+      "status": "requires_manual_review"
+    },
+    {
+      "id": "90c10785-a61c-4f15-8cb3-841d0eebb250",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 200,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJ98DM9ZL8",
+      "status": "pending",
+      "createdAt": "2025-10-13T14:47:06.742Z"
+    },
+    {
+      "id": "cf64874a-19a4-40d6-865a-f802ba1880ca",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 200,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJ98DM9ZL8",
+      "status": "pending",
+      "createdAt": "2025-10-13T14:47:49.154Z"
+    },
+    {
+      "id": "7f216010-4d17-46ad-8ed5-7550e626368a",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 200,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJ98DM9ZL8",
+      "status": "pending",
+      "createdAt": "2025-10-13T15:24:37.033Z"
+    },
+    {
+      "id": "a722d199-4b0b-454d-bcc1-65aaa5c8d40f",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 200,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 200.00 to fitsum temesgen (2519****7279) on 09/10/2025 19:30:13. Your transaction number is CJ98DM9ZL8. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 23.53. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJ98DM9ZL8.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJ98DM9ZL8",
+      "status": "pending",
+      "createdAt": "2025-10-13T18:54:01.265Z"
+    },
+    {
+      "id": "e28243ab-44b0-4918-a9e8-1baaa02922e4",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 100,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 100.00 to NATNAEL GIRMA (2519****4350) on 14/10/2025 17:35:44. Your transaction number is CJE4GXYB0U. The service fee is  ETB 0.87 and  15% VAT on the service fee is ETB 0.13. Your current E-Money Account  balance is ETB 128.65. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJE4GXYB0U.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJE4GXYB0U",
+      "status": "approved",
+      "createdAt": "2025-10-15T11:10:06.858Z"
+    },
+    {
+      "id": "582d3466-88a7-4342-99ab-94222744fbc2",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 30,
+      "status": "rejected",
+      "createdAt": "2025-10-15T11:29:09.809Z"
+    },
+    {
+      "id": "c86cc458-c06a-42e5-a324-4dec1b703cf2",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 30,
+      "status": "rejected",
+      "createdAt": "2025-10-15T11:43:27.310Z"
+    },
+    {
+      "id": "41a5c307-6cc4-4a78-9a9a-f7401ba46ff9",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 30,
+      "status": "rejected",
+      "createdAt": "2025-10-15T11:50:52.688Z"
+    },
+    {
+      "id": "0150d22c-ab2c-46f0-9c60-c0e8e004bb54",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 350,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 350.00 to NATNAEL GIRMA (2519****4350) on 12/10/2025 20:17:49. Your transaction number is CJC9FNR5BN. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 60.65. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJC9FNR5BN.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJC9FNR5BN",
+      "status": "approved",
+      "createdAt": "2025-10-15T13:34:39.292Z"
+    },
+    {
+      "id": "f34b7026-22e8-4eb1-a6d0-55706fcab54f",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 20,
+      "status": "rejected",
+      "createdAt": "2025-10-22T11:58:22.177Z"
+    },
+    {
+      "id": "ab3fffda-977b-4165-bd41-500d45439918",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 20,
+      "status": "rejected",
+      "createdAt": "2025-10-22T12:00:01.304Z"
+    },
+    {
+      "id": "63c3db38-d69d-407b-b299-969f5ff2a9f8",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "rejected",
+      "createdAt": "2025-10-22T12:22:32.028Z"
+    },
+    {
+      "id": "ffab89b9-7639-421f-9771-782238ec6a6d",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "rejected",
+      "createdAt": "2025-10-22T12:47:23.879Z"
+    },
+    {
+      "id": "4b0e96af-24f9-42c9-8231-0efb8dd48903",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "rejected",
+      "createdAt": "2025-10-22T13:10:54.289Z"
+    },
+    {
+      "id": "6acb95da-2923-4889-88d0-d5568c4b786d",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "rejected",
+      "createdAt": "2025-10-22T16:08:01.575Z"
+    },
+    {
+      "id": "ac73f7d2-f5c6-4469-b808-c0b3c537d5da",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 40,
+      "status": "rejected",
+      "createdAt": "2025-10-23T14:27:56.874Z"
+    },
+    {
+      "id": "f032c6e2-2c17-406a-8c56-747a7e6758dc",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 40,
+      "status": "rejected",
+      "createdAt": "2025-10-23T15:19:07.166Z"
+    },
+    {
+      "id": "87337175-bb46-4c2c-b547-0c801b3cc31c",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 60,
+      "status": "rejected",
+      "createdAt": "2025-10-24T11:08:46.107Z"
+    },
+    {
+      "id": "7df67de3-7107-4f27-ae43-fc7dd11525aa",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T11:21:23.588Z"
+    },
+    {
+      "id": "71892e22-cd08-433a-8c98-9f4124dc8887",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T11:24:48.738Z"
+    },
+    {
+      "id": "85afb0fb-c2e9-4725-a69d-c7fc9f862508",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T11:51:55.015Z"
+    },
+    {
+      "id": "5c48f31d-900a-4df5-be62-718ae26906ce",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:00:43.419Z"
+    },
+    {
+      "id": "d55a7adf-ae16-4358-b454-d7cba42858c5",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:06:25.113Z"
+    },
+    {
+      "id": "4c31ecd3-852c-4e09-9917-0d78e571d316",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 10,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:06:51.478Z"
+    },
+    {
+      "id": "44ba9875-85ce-4a5a-a9ff-61318e918e75",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "approved",
+      "createdAt": "2025-10-24T12:10:54.057Z"
+    },
+    {
+      "id": "b4175176-53bd-43c0-b73c-12172f511a58",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:16:17.988Z"
+    },
+    {
+      "id": "c4ce4356-65d6-42d2-8a20-d7e090028553",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:32:54.446Z"
+    },
+    {
+      "id": "c0a091cb-c783-4ae3-a461-dbd81ad03810",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 25,
+      "status": "pending",
+      "createdAt": "2025-10-24T12:37:53.783Z"
+    },
+    {
+      "id": "a1f4066b-7ff3-4546-99f8-843119706af5",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 50,
+      "status": "pending",
+      "createdAt": "2025-10-24T13:03:17.768Z"
+    },
+    {
+      "id": "7933aa29-8eca-4189-b14d-43f02e222320",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 70,
+      "status": "pending",
+      "createdAt": "2025-10-24T13:34:35.032Z"
+    },
+    {
+      "id": "1bd92e29-944a-46aa-ba45-a0df70a608eb",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 45,
+      "status": "pending",
+      "createdAt": "2025-10-24T14:10:22.791Z"
+    },
+    {
+      "id": "b921f87f-17f2-4f9b-b849-933fc13542ce",
+      "userId": "user_qkrgub3vo",
+      "type": "withdrawal",
+      "amount": 56,
+      "status": "approved",
+      "createdAt": "2025-10-24T15:54:41.584Z"
+    },
+    {
+      "id": "003f8f4b-31c5-4a79-a99c-c051db6c9717",
+      "userId": "user_608",
+      "type": "withdrawal",
+      "amount": 150,
+      "status": "approved",
+      "createdAt": "2025-10-24T15:57:27.841Z"
+    },
+    {
+      "id": "e94f4104-2929-41ae-9910-cf79698efe1e",
+      "userId": "user_qkrgub3vo",
+      "type": "deposit",
+      "amount": 300,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 300.00 to NATNAEL GIRMA (2519****4350) on 26/10/2025 13:39:59. Your transaction number is CJQ5P3QI53. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 97.26. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CJQ5P3QI53.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CJQ5P3QI53",
+      "status": "approved",
+      "createdAt": "2025-10-27T14:35:16.401Z"
+    },
+    {
+      "id": "e28ca808-ff2f-4283-8f07-00d4ed342b7f",
+      "phone": "0912735222",
+      "type": "deposit",
+      "amount": 150,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 150.00 to NATNAEL GIRMA (2519****4350) on 03/11/2025 22:06:51. Your transaction number is CK30V8672Q. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 185.30. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CK30V8672Q.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CK30V8672Q",
+      "status": "approved",
+      "createdAt": "2025-11-06T13:36:42.318Z"
+    },
+    {
+      "id": "14fcba24-bca0-4248-bd06-48726c6d235d",
+      "phone": "0923119628",
+      "type": "deposit",
+      "amount": 380,
+      "telebirrMessage": "Dear KELEMUWA  You have transferred ETB 380.00 to NATNAEL GIRMA (2519****4350) on 01/11/2025 22:39:13. Your transaction number is CK16TUQI1M. The service fee is  ETB 1.74 and  15% VAT on the service fee is ETB 0.26. Your current E-Money Account  balance is ETB 37.30. To download your payment information please click this link: https://transactioninfo.ethiotelecom.et/receipt/CK16TUQI1M.  Thank you for using telebirr Ethio telecom",
+      "telebirrTransactionNumber": "CK16TUQI1M",
+      "status": "approved",
+      "createdAt": "2025-11-06T14:16:47.504Z"
+    },
+    {
+      "id": "240445e6-26cb-4c3d-a01f-a5c649d432af",
+      "phone": "0923119628",
+      "type": "withdrawal",
+      "amount": 80,
+      "status": "approved",
+      "createdAt": "2025-11-07T09:55:02.663Z"
+    }
+  ]
+}

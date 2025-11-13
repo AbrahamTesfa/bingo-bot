@@ -1,0 +1,23 @@
+{
+  "name": "top-bingo",
+  "version": "1.0.0",
+  "description": "Bingo game server with WebSockets and SQLite",
+  "main": "top.js",
+  "scripts": {
+    "start": "node top.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["bingo", "websocket", "sqlite", "termux", "nodejs"],
+  "author": "Your Name",
+  "license": "MIT"
+}
+

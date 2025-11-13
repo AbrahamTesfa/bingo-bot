@@ -1,0 +1,405 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/npm
+1 info using npm@11.5.1
+2 info using node@v24.7.0
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm install better-sqlite3
+7 verbose argv "install" "better-sqlite3"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2025-09-19T11_10_54_834Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2025-09-19T11_10_54_834Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 silly packumentCache heap:1074003968 maxSize:268500992 maxEntrySize:134250496
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly fetch manifest better-sqlite3@*
+15 silly packumentCache full:https://registry.npmjs.org/better-sqlite3 cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/better-sqlite3 851ms (cache revalidated)
+17 silly packumentCache full:https://registry.npmjs.org/better-sqlite3 set size:353706 disposed:false
+18 silly placeDep ROOT better-sqlite3@12.2.0 OK for: top-bingo@1.0.0 want: *
+19 silly fetch manifest bindings@^1.5.0
+20 silly packumentCache full:https://registry.npmjs.org/bindings cache-miss
+21 silly fetch manifest prebuild-install@^7.1.1
+22 silly packumentCache full:https://registry.npmjs.org/prebuild-install cache-miss
+23 http fetch GET 200 https://registry.npmjs.org/prebuild-install 231ms (cache revalidated)
+24 silly packumentCache full:https://registry.npmjs.org/prebuild-install set size:178807 disposed:false
+25 http fetch GET 200 https://registry.npmjs.org/bindings 368ms (cache revalidated)
+26 silly packumentCache full:https://registry.npmjs.org/bindings set size:31303 disposed:false
+27 silly placeDep ROOT bindings@1.5.0 OK for: better-sqlite3@12.2.0 want: ^1.5.0
+28 silly placeDep ROOT prebuild-install@7.1.3 OK for: better-sqlite3@12.2.0 want: ^7.1.1
+29 silly fetch manifest file-uri-to-path@1.0.0
+30 silly packumentCache full:https://registry.npmjs.org/file-uri-to-path cache-miss
+31 silly fetch manifest detect-libc@^2.0.0
+32 silly packumentCache full:https://registry.npmjs.org/detect-libc cache-miss
+33 silly fetch manifest expand-template@^2.0.3
+34 silly packumentCache full:https://registry.npmjs.org/expand-template cache-miss
+35 silly fetch manifest github-from-package@0.0.0
+36 silly packumentCache full:https://registry.npmjs.org/github-from-package cache-miss
+37 silly fetch manifest minimist@^1.2.3
+38 silly packumentCache full:https://registry.npmjs.org/minimist cache-miss
+39 silly fetch manifest mkdirp-classic@^0.5.3
+40 silly packumentCache full:https://registry.npmjs.org/mkdirp-classic cache-miss
+41 silly fetch manifest napi-build-utils@^2.0.0
+42 silly packumentCache full:https://registry.npmjs.org/napi-build-utils cache-miss
+43 http fetch GET 200 https://registry.npmjs.org/detect-libc 136ms (cache revalidated)
+44 silly packumentCache full:https://registry.npmjs.org/detect-libc set size:43108 disposed:false
+45 silly fetch manifest node-abi@^3.3.0
+46 silly packumentCache full:https://registry.npmjs.org/node-abi cache-miss
+47 http fetch GET 200 https://registry.npmjs.org/expand-template 227ms (cache revalidated)
+48 silly packumentCache full:https://registry.npmjs.org/expand-template set size:23203 disposed:false
+49 silly fetch manifest pump@^3.0.0
+50 silly packumentCache full:https://registry.npmjs.org/pump cache-miss
+51 http fetch GET 200 https://registry.npmjs.org/minimist 302ms (cache revalidated)
+52 silly packumentCache full:https://registry.npmjs.org/minimist set size:77097 disposed:false
+53 silly fetch manifest rc@^1.2.7
+54 silly packumentCache full:https://registry.npmjs.org/rc cache-miss
+55 http fetch GET 200 https://registry.npmjs.org/node-abi 208ms (cache revalidated)
+56 silly packumentCache full:https://registry.npmjs.org/node-abi set size:302653 disposed:false
+57 silly fetch manifest simple-get@^4.0.0
+58 silly packumentCache full:https://registry.npmjs.org/simple-get cache-miss
+59 http fetch GET 200 https://registry.npmjs.org/napi-build-utils 439ms (cache revalidated)
+60 silly packumentCache full:https://registry.npmjs.org/napi-build-utils set size:13501 disposed:false
+61 silly fetch manifest tar-fs@^2.0.0
+62 silly packumentCache full:https://registry.npmjs.org/tar-fs cache-miss
+63 http fetch GET 200 https://registry.npmjs.org/github-from-package 454ms (cache revalidated)
+64 silly packumentCache full:https://registry.npmjs.org/github-from-package set size:3718 disposed:false
+65 silly fetch manifest tunnel-agent@^0.6.0
+66 silly packumentCache full:https://registry.npmjs.org/tunnel-agent cache-miss
+67 http fetch GET 200 https://registry.npmjs.org/file-uri-to-path 471ms (cache revalidated)
+68 silly packumentCache full:https://registry.npmjs.org/file-uri-to-path set size:10154 disposed:false
+69 http fetch GET 200 https://registry.npmjs.org/rc 153ms (cache revalidated)
+70 silly packumentCache full:https://registry.npmjs.org/rc set size:70417 disposed:false
+71 http fetch GET 200 https://registry.npmjs.org/pump 248ms (cache revalidated)
+72 silly packumentCache full:https://registry.npmjs.org/pump set size:39621 disposed:false
+73 http fetch GET 200 https://registry.npmjs.org/mkdirp-classic 496ms (cache revalidated)
+74 silly packumentCache full:https://registry.npmjs.org/mkdirp-classic set size:5503 disposed:false
+75 http fetch GET 200 https://registry.npmjs.org/simple-get 301ms (cache revalidated)
+76 silly packumentCache full:https://registry.npmjs.org/simple-get set size:90014 disposed:false
+77 http fetch GET 200 https://registry.npmjs.org/tar-fs 273ms (cache revalidated)
+78 silly packumentCache full:https://registry.npmjs.org/tar-fs set size:116386 disposed:false
+79 http fetch GET 200 https://registry.npmjs.org/tunnel-agent 300ms (cache revalidated)
+80 silly packumentCache full:https://registry.npmjs.org/tunnel-agent set size:12847 disposed:false
+81 silly placeDep ROOT file-uri-to-path@1.0.0 OK for: bindings@1.5.0 want: 1.0.0
+82 silly placeDep ROOT detect-libc@2.1.0 OK for: prebuild-install@7.1.3 want: ^2.0.0
+83 silly placeDep ROOT expand-template@2.0.3 OK for: prebuild-install@7.1.3 want: ^2.0.3
+84 silly placeDep ROOT github-from-package@0.0.0 OK for: prebuild-install@7.1.3 want: 0.0.0
+85 silly placeDep ROOT minimist@1.2.8 OK for: prebuild-install@7.1.3 want: ^1.2.3
+86 silly placeDep ROOT mkdirp-classic@0.5.3 OK for: prebuild-install@7.1.3 want: ^0.5.3
+87 silly placeDep ROOT napi-build-utils@2.0.0 OK for: prebuild-install@7.1.3 want: ^2.0.0
+88 silly placeDep ROOT node-abi@3.77.0 OK for: prebuild-install@7.1.3 want: ^3.3.0
+89 silly placeDep ROOT pump@3.0.3 OK for: prebuild-install@7.1.3 want: ^3.0.0
+90 silly placeDep ROOT rc@1.2.8 OK for: prebuild-install@7.1.3 want: ^1.2.7
+91 silly placeDep ROOT simple-get@4.0.1 OK for: prebuild-install@7.1.3 want: ^4.0.0
+92 silly placeDep ROOT tar-fs@2.1.4 OK for: prebuild-install@7.1.3 want: ^2.0.0
+93 silly placeDep ROOT tunnel-agent@0.6.0 OK for: prebuild-install@7.1.3 want: ^0.6.0
+94 silly fetch manifest end-of-stream@^1.1.0
+95 silly packumentCache full:https://registry.npmjs.org/end-of-stream cache-miss
+96 silly fetch manifest once@^1.3.1
+97 silly packumentCache full:https://registry.npmjs.org/once cache-miss
+98 silly fetch manifest ini@~1.3.0
+99 silly packumentCache full:https://registry.npmjs.org/ini cache-miss
+100 silly fetch manifest deep-extend@^0.6.0
+101 silly packumentCache full:https://registry.npmjs.org/deep-extend cache-miss
+102 silly fetch manifest strip-json-comments@~2.0.1
+103 silly packumentCache full:https://registry.npmjs.org/strip-json-comments cache-miss
+104 silly fetch manifest decompress-response@^6.0.0
+105 silly packumentCache full:https://registry.npmjs.org/decompress-response cache-miss
+106 silly fetch manifest once@^1.3.1
+107 silly packumentCache full:https://registry.npmjs.org/once cache-miss
+108 http fetch GET 200 https://registry.npmjs.org/ini 117ms (cache revalidated)
+109 silly packumentCache full:https://registry.npmjs.org/ini set size:54653 disposed:false
+110 silly fetch manifest simple-concat@^1.0.0
+111 silly packumentCache full:https://registry.npmjs.org/simple-concat cache-miss
+112 http fetch GET 200 https://registry.npmjs.org/deep-extend 138ms (cache revalidated)
+113 silly packumentCache full:https://registry.npmjs.org/deep-extend set size:34472 disposed:false
+114 silly fetch manifest chownr@^1.1.1
+115 silly packumentCache full:https://registry.npmjs.org/chownr cache-miss
+116 http fetch GET 200 https://registry.npmjs.org/end-of-stream 154ms (cache revalidated)
+117 silly packumentCache full:https://registry.npmjs.org/end-of-stream set size:27842 disposed:false
+118 silly fetch manifest tar-stream@^2.1.4
+119 silly packumentCache full:https://registry.npmjs.org/tar-stream cache-miss
+120 http fetch GET 200 https://registry.npmjs.org/decompress-response 156ms (cache revalidated)
+121 silly packumentCache full:https://registry.npmjs.org/decompress-response set size:34164 disposed:false
+122 http fetch GET 200 https://registry.npmjs.org/strip-json-comments 164ms (cache revalidated)
+123 silly packumentCache full:https://registry.npmjs.org/strip-json-comments set size:43569 disposed:false
+124 http fetch GET 200 https://registry.npmjs.org/once 203ms (cache revalidated)
+125 silly packumentCache full:https://registry.npmjs.org/once set size:11768 disposed:false
+126 http fetch GET 200 https://registry.npmjs.org/once 225ms (cache revalidated)
+127 silly packumentCache full:https://registry.npmjs.org/once set size:11768 disposed:false
+128 silly packumentCache full:https://registry.npmjs.org/once dispose
+129 http fetch GET 200 https://registry.npmjs.org/chownr 117ms (cache revalidated)
+130 silly packumentCache full:https://registry.npmjs.org/chownr set size:22157 disposed:false
+131 http fetch GET 200 https://registry.npmjs.org/simple-concat 240ms (cache revalidated)
+132 silly packumentCache full:https://registry.npmjs.org/simple-concat set size:6304 disposed:false
+133 http fetch GET 200 https://registry.npmjs.org/tar-stream 234ms (cache revalidated)
+134 silly packumentCache full:https://registry.npmjs.org/tar-stream set size:132366 disposed:false
+135 silly placeDep ROOT end-of-stream@1.4.5 OK for: pump@3.0.3 want: ^1.1.0
+136 silly placeDep ROOT once@1.4.0 OK for: pump@3.0.3 want: ^1.3.1
+137 silly fetch manifest once@^1.4.0
+138 silly packumentCache full:https://registry.npmjs.org/once cache-hit
+139 silly fetch manifest wrappy@1
+140 silly packumentCache full:https://registry.npmjs.org/wrappy cache-miss
+141 http fetch GET 200 https://registry.npmjs.org/wrappy 192ms (cache revalidated)
+142 silly packumentCache full:https://registry.npmjs.org/wrappy set size:7682 disposed:false
+143 silly placeDep ROOT wrappy@1.0.2 OK for: once@1.4.0 want: 1
+144 silly placeDep ROOT deep-extend@0.6.0 OK for: rc@1.2.8 want: ^0.6.0
+145 silly placeDep ROOT ini@1.3.8 OK for: rc@1.2.8 want: ~1.3.0
+146 silly placeDep ROOT strip-json-comments@2.0.1 OK for: rc@1.2.8 want: ~2.0.1
+147 silly placeDep ROOT decompress-response@6.0.0 OK for: simple-get@4.0.1 want: ^6.0.0
+148 silly placeDep ROOT simple-concat@1.0.1 OK for: simple-get@4.0.1 want: ^1.0.0
+149 silly fetch manifest mimic-response@^3.1.0
+150 silly packumentCache full:https://registry.npmjs.org/mimic-response cache-miss
+151 http fetch GET 200 https://registry.npmjs.org/mimic-response 90ms (cache revalidated)
+152 silly packumentCache full:https://registry.npmjs.org/mimic-response set size:20174 disposed:false
+153 silly placeDep ROOT mimic-response@3.1.0 OK for: decompress-response@6.0.0 want: ^3.1.0
+154 silly placeDep ROOT chownr@1.1.4 OK for: tar-fs@2.1.4 want: ^1.1.1
+155 silly placeDep ROOT tar-stream@2.2.0 OK for: tar-fs@2.1.4 want: ^2.1.4
+156 silly fetch manifest bl@^4.0.3
+157 silly packumentCache full:https://registry.npmjs.org/bl cache-miss
+158 silly fetch manifest fs-constants@^1.0.0
+159 silly packumentCache full:https://registry.npmjs.org/fs-constants cache-miss
+160 silly fetch manifest readable-stream@^3.1.1
+161 silly packumentCache full:https://registry.npmjs.org/readable-stream cache-miss
+162 http fetch GET 200 https://registry.npmjs.org/bl 224ms (cache revalidated)
+163 silly packumentCache full:https://registry.npmjs.org/bl set size:180259 disposed:false
+164 http fetch GET 200 https://registry.npmjs.org/readable-stream 320ms (cache revalidated)
+165 silly packumentCache full:https://registry.npmjs.org/readable-stream set size:261096 disposed:false
+166 http fetch GET 200 https://registry.npmjs.org/fs-constants 933ms (cache revalidated)
+167 silly packumentCache full:https://registry.npmjs.org/fs-constants set size:3522 disposed:false
+168 silly placeDep ROOT bl@4.1.0 OK for: tar-stream@2.2.0 want: ^4.0.3
+169 silly placeDep ROOT fs-constants@1.0.0 OK for: tar-stream@2.2.0 want: ^1.0.0
+170 silly placeDep ROOT readable-stream@3.6.2 OK for: tar-stream@2.2.0 want: ^3.1.1
+171 silly fetch manifest buffer@^5.5.0
+172 silly packumentCache full:https://registry.npmjs.org/buffer cache-miss
+173 silly fetch manifest readable-stream@^3.4.0
+174 silly packumentCache full:https://registry.npmjs.org/readable-stream cache-hit
+175 silly fetch manifest string_decoder@^1.1.1
+176 silly packumentCache full:https://registry.npmjs.org/string_decoder cache-miss
+177 silly fetch manifest util-deprecate@^1.0.1
+178 silly packumentCache full:https://registry.npmjs.org/util-deprecate cache-miss
+179 http fetch GET 200 https://registry.npmjs.org/buffer 154ms (cache revalidated)
+180 silly packumentCache full:https://registry.npmjs.org/buffer set size:280480 disposed:false
+181 http fetch GET 200 https://registry.npmjs.org/string_decoder 245ms (cache revalidated)
+182 silly packumentCache full:https://registry.npmjs.org/string_decoder set size:28441 disposed:false
+183 http fetch GET 200 https://registry.npmjs.org/util-deprecate 413ms (cache revalidated)
+184 silly packumentCache full:https://registry.npmjs.org/util-deprecate set size:6674 disposed:false
+185 silly placeDep ROOT buffer@5.7.1 OK for: bl@4.1.0 want: ^5.5.0
+186 silly fetch manifest base64-js@^1.3.1
+187 silly packumentCache full:https://registry.npmjs.org/base64-js cache-miss
+188 silly fetch manifest ieee754@^1.1.13
+189 silly packumentCache full:https://registry.npmjs.org/ieee754 cache-miss
+190 http fetch GET 200 https://registry.npmjs.org/base64-js 144ms (cache revalidated)
+191 silly packumentCache full:https://registry.npmjs.org/base64-js set size:41270 disposed:false
+192 http fetch GET 200 https://registry.npmjs.org/ieee754 152ms (cache revalidated)
+193 silly packumentCache full:https://registry.npmjs.org/ieee754 set size:34910 disposed:false
+194 silly placeDep ROOT base64-js@1.5.1 OK for: buffer@5.7.1 want: ^1.3.1
+195 silly placeDep ROOT ieee754@1.2.1 OK for: buffer@5.7.1 want: ^1.1.13
+196 silly placeDep ROOT string_decoder@1.3.0 OK for: readable-stream@3.6.2 want: ^1.1.1
+197 silly placeDep ROOT util-deprecate@1.0.2 OK for: readable-stream@3.6.2 want: ^1.0.1
+198 silly reify moves {}
+199 silly audit bulk request {
+199 silly audit   accepts: [ '1.3.8' ],
+199 silly audit   anymatch: [ '3.1.3' ],
+199 silly audit   'array-flatten': [ '1.1.1' ],
+199 silly audit   'balanced-match': [ '1.0.2' ],
+199 silly audit   'binary-extensions': [ '2.3.0' ],
+199 silly audit   'body-parser': [ '1.20.3' ],
+199 silly audit   'brace-expansion': [ '1.1.12' ],
+199 silly audit   braces: [ '3.0.3' ],
+199 silly audit   bytes: [ '3.1.2' ],
+199 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+199 silly audit   'call-bound': [ '1.0.4' ],
+199 silly audit   chokidar: [ '3.6.0' ],
+199 silly audit   'concat-map': [ '0.0.1' ],
+199 silly audit   'content-disposition': [ '0.5.4' ],
+199 silly audit   'content-type': [ '1.0.5' ],
+199 silly audit   cookie: [ '0.7.1' ],
+199 silly audit   'cookie-signature': [ '1.0.6' ],
+199 silly audit   debug: [ '2.6.9', '4.4.3' ],
+199 silly audit   depd: [ '2.0.0' ],
+199 silly audit   destroy: [ '1.2.0' ],
+199 silly audit   'dunder-proto': [ '1.0.1' ],
+199 silly audit   'ee-first': [ '1.1.1' ],
+199 silly audit   encodeurl: [ '2.0.0', '1.0.2' ],
+199 silly audit   'es-define-property': [ '1.0.1' ],
+199 silly audit   'es-errors': [ '1.3.0' ],
+199 silly audit   'es-object-atoms': [ '1.1.1' ],
+199 silly audit   'escape-html': [ '1.0.3' ],
+199 silly audit   etag: [ '1.8.1' ],
+199 silly audit   express: [ '4.21.2' ],
+199 silly audit   'fill-range': [ '7.1.1' ],
+199 silly audit   finalhandler: [ '1.3.1' ],
+199 silly audit   forwarded: [ '0.2.0' ],
+199 silly audit   fresh: [ '0.5.2' ],
+199 silly audit   fsevents: [ '2.3.3' ],
+199 silly audit   'function-bind': [ '1.1.2' ],
+199 silly audit   'get-intrinsic': [ '1.3.0' ],
+199 silly audit   'get-proto': [ '1.0.1' ],
+199 silly audit   'glob-parent': [ '5.1.2' ],
+199 silly audit   gopd: [ '1.2.0' ],
+199 silly audit   'has-flag': [ '3.0.0' ],
+199 silly audit   'has-symbols': [ '1.1.0' ],
+199 silly audit   hasown: [ '2.0.2' ],
+199 silly audit   'http-errors': [ '2.0.0' ],
+199 silly audit   'iconv-lite': [ '0.4.24' ],
+199 silly audit   'ignore-by-default': [ '1.0.1' ],
+199 silly audit   inherits: [ '2.0.4' ],
+199 silly audit   'ipaddr.js': [ '1.9.1' ],
+199 silly audit   'is-binary-path': [ '2.1.0' ],
+199 silly audit   'is-extglob': [ '2.1.1' ],
+199 silly audit   'is-glob': [ '4.0.3' ],
+199 silly audit   'is-number': [ '7.0.0' ],
+199 silly audit   lowdb: [ '6.1.1' ],
+199 silly audit   'math-intrinsics': [ '1.1.0' ],
+199 silly audit   'media-typer': [ '0.3.0' ],
+199 silly audit   'merge-descriptors': [ '1.0.3' ],
+199 silly audit   methods: [ '1.1.2' ],
+199 silly audit   mime: [ '1.6.0' ],
+199 silly audit   'mime-db': [ '1.52.0' ],
+199 silly audit   'mime-types': [ '2.1.35' ],
+199 silly audit   minimatch: [ '3.1.2' ],
+199 silly audit   ms: [ '2.0.0', '2.1.3' ],
+199 silly audit   negotiator: [ '0.6.3' ],
+199 silly audit   nodemon: [ '3.1.10' ],
+199 silly audit   'normalize-path': [ '3.0.0' ],
+199 silly audit   'object-inspect': [ '1.13.4' ],
+199 silly audit   'on-finished': [ '2.4.1' ],
+199 silly audit   parseurl: [ '1.3.3' ],
+199 silly audit   'path-to-regexp': [ '0.1.12' ],
+199 silly audit   picomatch: [ '2.3.1' ],
+199 silly audit   'proxy-addr': [ '2.0.7' ],
+199 silly audit   'pstree.remy': [ '1.1.8' ],
+199 silly audit   qs: [ '6.13.0' ],
+199 silly audit   'range-parser': [ '1.2.1' ],
+199 silly audit   'raw-body': [ '2.5.2' ],
+199 silly audit   readdirp: [ '3.6.0' ],
+199 silly audit   'safe-buffer': [ '5.2.1' ],
+199 silly audit   'safer-buffer': [ '2.1.2' ],
+199 silly audit   semver: [ '7.7.2' ],
+199 silly audit   send: [ '0.19.0' ],
+199 silly audit   'serve-static': [ '1.16.2' ],
+199 silly audit   setprototypeof: [ '1.2.0' ],
+199 silly audit   'side-channel': [ '1.1.0' ],
+199 silly audit   'side-channel-list': [ '1.0.0' ],
+199 silly audit   'side-channel-map': [ '1.0.1' ],
+199 silly audit   'side-channel-weakmap': [ '1.0.2' ],
+199 silly audit   'simple-update-notifier': [ '2.0.0' ],
+199 silly audit   statuses: [ '2.0.1' ],
+199 silly audit   steno: [ '3.2.0' ],
+199 silly audit   'supports-color': [ '5.5.0' ],
+199 silly audit   'to-regex-range': [ '5.0.1' ],
+199 silly audit   toidentifier: [ '1.0.1' ],
+199 silly audit   touch: [ '3.1.1' ],
+199 silly audit   'type-is': [ '1.6.18' ],
+199 silly audit   undefsafe: [ '2.0.5' ],
+199 silly audit   unpipe: [ '1.0.0' ],
+199 silly audit   'utils-merge': [ '1.0.1' ],
+199 silly audit   uuid: [ '9.0.1' ],
+199 silly audit   vary: [ '1.1.2' ],
+199 silly audit   ws: [ '8.18.3' ],
+199 silly audit   'better-sqlite3': [ '12.2.0' ],
+199 silly audit   bindings: [ '1.5.0' ],
+199 silly audit   'prebuild-install': [ '7.1.3' ],
+199 silly audit   'file-uri-to-path': [ '1.0.0' ],
+199 silly audit   'detect-libc': [ '2.1.0' ],
+199 silly audit   'expand-template': [ '2.0.3' ],
+199 silly audit   'github-from-package': [ '0.0.0' ],
+199 silly audit   minimist: [ '1.2.8' ],
+199 silly audit   'mkdirp-classic': [ '0.5.3' ],
+199 silly audit   'napi-build-utils': [ '2.0.0' ],
+199 silly audit   'node-abi': [ '3.77.0' ],
+199 silly audit   pump: [ '3.0.3' ],
+199 silly audit   rc: [ '1.2.8' ],
+199 silly audit   'simple-get': [ '4.0.1' ],
+199 silly audit   'tar-fs': [ '2.1.4' ],
+199 silly audit   'tunnel-agent': [ '0.6.0' ],
+199 silly audit   'end-of-stream': [ '1.4.5' ],
+199 silly audit   once: [ '1.4.0' ],
+199 silly audit   wrappy: [ '1.0.2' ],
+199 silly audit   'deep-extend': [ '0.6.0' ],
+199 silly audit   ini: [ '1.3.8' ],
+199 silly audit   'strip-json-comments': [ '2.0.1' ],
+199 silly audit   'decompress-response': [ '6.0.0' ],
+199 silly audit   'simple-concat': [ '1.0.1' ],
+199 silly audit   'mimic-response': [ '3.1.0' ],
+199 silly audit   chownr: [ '1.1.4' ],
+199 silly audit   'tar-stream': [ '2.2.0' ],
+199 silly audit   bl: [ '4.1.0' ],
+199 silly audit   'fs-constants': [ '1.0.0' ],
+199 silly audit   'readable-stream': [ '3.6.2' ],
+199 silly audit   buffer: [ '5.7.1' ],
+199 silly audit   'base64-js': [ '1.5.1' ],
+199 silly audit   ieee754: [ '1.2.1' ],
+199 silly audit   string_decoder: [ '1.3.0' ],
+199 silly audit   'util-deprecate': [ '1.0.2' ]
+199 silly audit }
+200 verbose reify failed optional dependency /data/data/com.termux/files/home/node_modules/fsevents
+201 silly reify mark deleted [ '/data/data/com.termux/files/home/node_modules/fsevents' ]
+202 http cache util-deprecate@https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz 0ms (cache hit)
+203 http cache string_decoder@https://registry.npmjs.org/string_decoder/-/string_decoder-1.3.0.tgz 0ms (cache hit)
+204 http cache ieee754@https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz 0ms (cache hit)
+205 http cache base64-js@https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz 0ms (cache hit)
+206 http cache readable-stream@https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz 0ms (cache hit)
+207 http cache fs-constants@https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz 0ms (cache hit)
+208 http cache bl@https://registry.npmjs.org/bl/-/bl-4.1.0.tgz 0ms (cache hit)
+209 http cache buffer@https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz 0ms (cache hit)
+210 http cache tar-stream@https://registry.npmjs.org/tar-stream/-/tar-stream-2.2.0.tgz 0ms (cache hit)
+211 http cache chownr@https://registry.npmjs.org/chownr/-/chownr-1.1.4.tgz 1ms (cache hit)
+212 http cache mimic-response@https://registry.npmjs.org/mimic-response/-/mimic-response-3.1.0.tgz 0ms (cache hit)
+213 http cache simple-concat@https://registry.npmjs.org/simple-concat/-/simple-concat-1.0.1.tgz 0ms (cache hit)
+214 http cache decompress-response@https://registry.npmjs.org/decompress-response/-/decompress-response-6.0.0.tgz 0ms (cache hit)
+215 http cache strip-json-comments@https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-2.0.1.tgz 0ms (cache hit)
+216 http cache ini@https://registry.npmjs.org/ini/-/ini-1.3.8.tgz 0ms (cache hit)
+217 http cache end-of-stream@https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.5.tgz 0ms (cache hit)
+218 http cache tunnel-agent@https://registry.npmjs.org/tunnel-agent/-/tunnel-agent-0.6.0.tgz 1ms (cache hit)
+219 http cache tar-fs@https://registry.npmjs.org/tar-fs/-/tar-fs-2.1.4.tgz 0ms (cache hit)
+220 http cache rc@https://registry.npmjs.org/rc/-/rc-1.2.8.tgz 0ms (cache hit)
+221 http cache simple-get@https://registry.npmjs.org/simple-get/-/simple-get-4.0.1.tgz 0ms (cache hit)
+222 http cache pump@https://registry.npmjs.org/pump/-/pump-3.0.3.tgz 0ms (cache hit)
+223 http cache mkdirp-classic@https://registry.npmjs.org/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz 0ms (cache hit)
+224 http cache napi-build-utils@https://registry.npmjs.org/napi-build-utils/-/napi-build-utils-2.0.0.tgz 0ms (cache hit)
+225 http cache minimist@https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz 0ms (cache hit)
+226 http cache github-from-package@https://registry.npmjs.org/github-from-package/-/github-from-package-0.0.0.tgz 0ms (cache hit)
+227 http cache detect-libc@https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.0.tgz 0ms (cache hit)
+228 http cache file-uri-to-path@https://registry.npmjs.org/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz 0ms (cache hit)
+229 http cache prebuild-install@https://registry.npmjs.org/prebuild-install/-/prebuild-install-7.1.3.tgz 0ms (cache hit)
+230 http cache expand-template@https://registry.npmjs.org/expand-template/-/expand-template-2.0.3.tgz 0ms (cache hit)
+231 http cache better-sqlite3@https://registry.npmjs.org/better-sqlite3/-/better-sqlite3-12.2.0.tgz 0ms (cache hit)
+232 http cache node-abi@https://registry.npmjs.org/node-abi/-/node-abi-3.77.0.tgz 0ms (cache hit)
+233 http cache bindings@https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz 0ms (cache hit)
+234 http cache deep-extend@https://registry.npmjs.org/deep-extend/-/deep-extend-0.6.0.tgz 0ms (cache hit)
+235 http cache once@https://registry.npmjs.org/once/-/once-1.4.0.tgz 0ms (cache hit)
+236 http cache wrappy@https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz 0ms (cache hit)
+237 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 534ms
+238 silly audit report {}
+239 info run better-sqlite3@12.2.0 install node_modules/better-sqlite3 prebuild-install || node-gyp rebuild --release
+240 info run better-sqlite3@12.2.0 install { code: 1, signal: null }
+241 verbose stack Error: command failed
+241 verbose stack     at promiseSpawn (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/promise-spawn/lib/index.js:22:22)
+241 verbose stack     at spawnWithShell (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/promise-spawn/lib/index.js:124:10)
+241 verbose stack     at promiseSpawn (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/promise-spawn/lib/index.js:12:12)
+241 verbose stack     at runScriptPkg (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/run-script-pkg.js:79:13)
+241 verbose stack     at runScript (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/run-script.js:9:12)
+241 verbose stack     at /data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/rebuild.js:331:17
+241 verbose stack     at run (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/promise-call-limit/dist/commonjs/index.js:67:22)
+241 verbose stack     at /data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/promise-call-limit/dist/commonjs/index.js:84:9
+241 verbose stack     at new Promise (<anonymous>)
+241 verbose stack     at callLimit (/data/data/com.termux/files/usr/lib/node_modules/npm/node_modules/promise-call-limit/dist/commonjs/index.js:35:69)
+242 verbose pkgid better-sqlite3@12.2.0
+243 error code 1
+244 error path /data/data/com.termux/files/home/node_modules/better-sqlite3
+245 error command failed
+246 error command sh -c prebuild-install || node-gyp rebuild --release
+247 silly unfinished npm timer reify 1758280257744
+248 silly unfinished npm timer reify:build 1758280263879
+249 silly unfinished npm timer build 1758280263882
+250 silly unfinished npm timer build:deps 1758280263883
+251 silly unfinished npm timer build:run:install 1758280263904
+252 silly unfinished npm timer build:run:install:node_modules/better-sqlite3 1758280263905
+253 verbose cwd /data/data/com.termux/files/home
+254 verbose os Linux 4.9.148
+255 verbose node v24.7.0
+256 verbose npm  v11.5.1
+257 verbose exit 1
+258 verbose code 1
+259 error A complete log of this run can be found in: /data/data/com.termux/files/home/.npm/_logs/2025-09-19T11_10_54_834Z-debug-0.log

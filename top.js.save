@@ -1,0 +1,254 @@
+const express = require('express');
+const http = require('http');
+const WebSocket = require('ws');
+const path = require('path');
+const { v4: uuid } = require('uuid');
+
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+// Serve index.html directly from home directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Use correct environment variable
+const PORT = process.env.PORT || 3000;
+
+const BINGO_LETTERS = ['B', 'I', 'N', 'G', 'O'];
+
+// In-memory room data
+
+const rooms = {
+  room_1: { players: [], gameStarted: false, numbersCalled: [], baseJackpot: 10, jackpot: 10, cost: 1, gameInterval: null, countdown: null, countdownTime: 60, currentCountdown: 60 },
+  room_2: { players: [], gameStarted: false, numbersCalled: [], baseJackpot: 20, jackpot: 20, cost: 2, gameInterval: null, countdown: null, countdownTime: 60, currentCountdown: 60 },
+  room_3: { players: [], gameStarted: false, numbersCalled: [], baseJackpot: 20, jackpot: 20, cost: 2, gameInterval: null, countdown: null, countdownTime: 60, currentCountdown: 60 },
+  room_4: { players: [], gameStarted: false, numbersCalled: [], baseJackpot: 100, jackpot: 100, cost: 10, gameInterval: null, countdown: null, countdownTime: 60, currentCountdown: 60 }
+};
+
+const players = new Map();       // ws -> player info
+const playerWallets = new Map(); // userId -> wallet
+const pendingRequests = [];      // deposit/withdraw requests
+
+// Check if a card has a winning line
+function checkBingo(card, numbersCalled) {
+  const isLineMarked = (line) => line.every(num => num === 0 || numbersCalled.includes(num));
+
+  // Rows
+  for (let i = 0; i < 5; i++) {
+    const row = BINGO_LETTERS.map(letter => card[letter][i]);
+    if (isLineMarked(row)) return true;
+  }
+
+  // Columns
+  for (const letter of BINGO_LETTERS) {
+    if (isLineMarked(card[letter])) return true;
+  }
+
+  // Diagonals
+  const diag1 = BINGO_LETTERS.map((letter, i) => card[letter][i]);
+  const diag2 = BINGO_LETTERS.map((letter, i) => card[BINGO_LETTERS[4 - i]][i]);
+  if (isLineMarked(diag1) || isLineMarked(diag2)) return true;
+
+  return false;
+}
+
+// Start game loop
+function startGame(roomId) {
+  const room = rooms[roomId];
+  if (!room || room.gameStarted) return;
+
+  room.gameStarted = true;
+  room.numbersCalled = [];
+
+  const availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1);
+
+  room.players.forEach(p =>
+    p.send(JSON.stringify({ type: 'game_started', cards: p.cards, numbersCalled: [] }))
+  );
+
+  room.gameInterval = setInterval(() => {
+    if (availableNumbers.length === 0 || room.players.length === 0) {
+      clearInterval(room.gameInterval);
+      room.gameStarted = false;
+      room.players.forEach(p => p.send(JSON.stringify({ type: 'game_end' })));
+      return;
+    }
+
+    const num = availableNumbers.splice(Math.floor(Math.random() * availableNumbers.length), 1)[0];
+    room.numbersCalled.push(num);
+
+    room.players.forEach(p =>
+      p.send(JSON.stringify({ type: 'number_called', number: num, calledNumbers: room.numbersCalled }))
+    );
+  }, 3000);
+}
+
+// Broadcast room status
+function updateRoomStatus() {
+  const status = {};
+  for (const id in rooms) {
+    status[id] = {
+      players: rooms[id].players.length,
+      jackpot: rooms[id].jackpot,
+      cost: rooms[id].cost,
+      gameStarted: rooms[id].gameStarted
+    };
+  }
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ type: 'room_status_update', room_status: status }));
+    }
+  });
+}
+
+// Handle connections
+wss.on('connection', ws => {
+  ws.id = uuid();
+  console.log(`Client connected: ${ws.id}`);
+
+  ws.on('message', msg => {
+    let data;
+    try {
+      data = JSON.parse(msg);
+    } catch {
+      return;
+    }
+
+    switch (data.type) {
+      case 'get_player_data': {
+        let wallet = playerWallets.get(data.userId);
+        if (!wallet) {
+          wallet = { balance: 1000, wins: 0, gamesPlayed: 0 };
+          playerWallets.set(data.userId, wallet);
+        }
+        const requests = pendingRequests.filter(r => r.userId === data.userId);
+        ws.userId = data.userId;
+        ws.send(JSON.stringify({ type: 'player_data', ...wallet, userId: data.userId, requests }));
+        break;
+      }
+
+      case 'get_leaderboard': {
+        const leaderboard = Array.from(playerWallets.entries())
+          .map(([id, w]) => ({ userId: id, username: `User ${id.slice(0,4)}`, wins: w.wins, gamesPlayed: w.gamesPlayed }))
+          .sort((a, b) => b.wins - a.wins)
+          .slice(0, 10);
+        ws.send(JSON.stringify({ type: 'leaderboard_data', leaderboard }));
+        break;
+      }
+
+      case 'join_room': {
+        const { roomId, cards, userId } = data;
+        const room = rooms[roomId];
+        if (!room) return ws.send(JSON.stringify({ type: 'error', message: 'Invalid room' }));
+
+        const wallet = playerWallets.get(userId);
+        if (!wallet || wallet.balance < room.cost) {
+          return ws.send(JSON.stringify({ type: 'error', message: 'Insufficient funds' }));
+        }
+
+        wallet.balance -= room.cost;
+        room.jackpot += room.cost;
+
+    
+
+      case 'claim_bingo': {
+        const room = rooms[data.roomI    if (!room) return;
+
+        const player = room.players.find(p => p.id === data.playerId);
+        if (!player) return ws.send(JSON.stringify({ type: 'error', message: 'Not in game' }));
+
+        const valid = player.cards.some(card => checkBingo(card, room.numbersCalled));
+        if (valid) {
+          room.players.forEach(p => p.send(JSON.stringify({ type: 'bingo_win', winnerId: player.id })));
+          const wallet = playerWallets.get(player.userId);
+          if (wallet) {
+            wallet.balance += room.jackpot;
+            wallet.wins++;
+            player.send(JSON.stringify({ type: 'balance_update', balance: wallet.balance }));
+          }
+          clearInterval(room.gameInterval);
+          room.gameStarted = false;
+          room.players.forEach(p => p.send(JSON.stringify({ type: 'game_end' })));
+          room.numbersCalled = [];
+          room.jackpot = room.baseJackpot;
+        } else {
+          ws.send(JSON.stringify({ type: 'invalid_bingo' }));
+        }
+        break;
+      }
+
+      case 'request_deposit': {
+        const req = { id: uuid(), type: 'deposit', userId: data.userId, amount: data.amount, status: 'pending' };
+        pendingRequests.push(req);
+        ws.send(JSON.stringify({ type: 'request_status_update', ...req }));
+        break;
+      }
+
+      case 'request_withdrawal': {
+        const req = { id: uuid(), type: 'withdrawal', userId: data.userId, amount: data.amount, status: 'pending' };
+        pendingRequests.push(req);
+        ws.send(JSON.stringify({ type: 'request_status_update', ...req }));
+        break;
+      }
+
+      case 'get_admin_requests':
+        ws.send(JSON.stringify({ type: 'requests_data', requests: pendingRequests }));
+        break;
+
+      case 'approve_request': {
+        const req = pendingRequests.find(r => r.id === data.requestId);
+        if (req) {
+          req.status = 'approved';
+          const wallet = playerWallets.get(req.userId);
+          if (wallet) {
+            wallet.balance += req.type === 'deposit' ? req.amount : -req.amount;
+            wss.clients.forEach(c => {
+              if (c.readyState === WebSocket.OPEN && c.userId === req.userId) {
+                c.send(JSON.stringify({ type: 'balance_update', balance: wallet.balance }));
+                c.send(JSON.stringify({ type: 'request_status_update', ...req }));
+              }
+            });
+          }
+          ws.send(JSON.stringify({ type: 'request_action_success' }));
+        }
+        break;
+      }
+
+      case 'reject_request': {
+        const req = pendingRequests.find(r => r.id === data.requestId);
+        if (req) {
+          req.status = 'rejected';
+          wss.clients.forEach(c => {
+            if (c.readyState === WebSocket.OPEN && c.userId === req.userId) {
+              c.send(JSON.stringify({ type: 'request_status_update', ...req }));
+            }
+          });
+          ws.send(JSON.stringify({ type: 'request_action_success' }));
+        }
+        break;
+      }
+
+      case 'get_room_status':
+        updateRoomStatus();
+        break;
+    }
+  });
+
+  ws.on('close', () => {
+    console.log(`Client disconnected: ${ws.id}`);
+    const player = players.get(ws);
+    if (player && player.roomId) {
+      const room = rooms[player.roomId];
+      room.players = room.players.filter(p => p.id !== ws.id);
+      updateRoomStatus();
+    }
+    players.delete(ws);
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+

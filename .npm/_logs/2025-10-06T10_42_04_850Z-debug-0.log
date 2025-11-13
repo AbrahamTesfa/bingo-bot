@@ -1,0 +1,37 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/npm
+1 info using npm@11.5.1
+2 info using node@v24.7.0
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm run generateFixedcards
+7 verbose argv "run" "generateFixedcards"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2025-10-06T10_42_04_850Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2025-10-06T10_42_04_850Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 silly logfile done cleaning log files
+12 verbose stack Error: Missing script: "generateFixedcards"
+12 verbose stack
+12 verbose stack Did you mean this?
+12 verbose stack   npm run generate-fixed-cards # run the "generate-fixed-cards" package script
+12 verbose stack
+12 verbose stack To see a list of scripts, run:
+12 verbose stack   npm run
+12 verbose stack     at #run (/data/data/com.termux/files/usr/lib/node_modules/npm/lib/commands/run.js:115:13)
+12 verbose stack     at async RunScript.exec (/data/data/com.termux/files/usr/lib/node_modules/npm/lib/commands/run.js:44:7)
+12 verbose stack     at async Npm.exec (/data/data/com.termux/files/usr/lib/node_modules/npm/lib/npm.js:208:9)
+12 verbose stack     at async module.exports (/data/data/com.termux/files/usr/lib/node_modules/npm/lib/cli/entry.js:60:5)
+13 error Missing script: "generateFixedcards"
+13 error
+13 error Did you mean this?
+13 error   npm run generate-fixed-cards # run the "generate-fixed-cards" package script
+13 error
+13 error To see a list of scripts, run:
+13 error   npm run
+14 verbose cwd /data/data/com.termux/files/home
+15 verbose os Linux 4.9.148
+16 verbose node v24.7.0
+17 verbose npm  v11.5.1
+18 verbose exit 1
+19 verbose code 1
+20 error A complete log of this run can be found in: /data/data/com.termux/files/home/.npm/_logs/2025-10-06T10_42_04_850Z-debug-0.log

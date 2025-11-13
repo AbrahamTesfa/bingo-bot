@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+
+        body {
+  font-family: 'Inter', sans-serif;
+  /* deep navy radial gradient background */
+  background: radial-gradient(circle at 10% 10%, #12203b 0%, #07102a 30%, #05071a 100%);
+  color: #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+        .page-section {
+            display: none;
+            padding-bottom: 7rem; /* Space for the navbar */
+        }
+        .page-section.active {
+            display: block;
+        }
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1E293B;
+            border-top: 1px solid #334155;
+            z-index: 1000;
+        }
+        .navbar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            color: #94A3B8;
+        }
+        .navbar-item.active {
+            color: #38BDF8;
+            background-color: #121A26;
+        }
+
+        /* Wrapper */
+.bingo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background: #0f172a;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  color: white;
+}
+
+/* Grid = headers + numbers */
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 3rem); /* same width for headers & cells */
+  grid-auto-rows: 3rem;
+  gap: 0.5rem;
+  background: #1e293b;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
+/* Header cells */
+.bingo-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.bingo-header.orange { color: #fb923c; }
+.bingo-header.red    { color: #ef4444; }
+.bingo-header.yellow { color: #facc15; }
+.bingo-header.green  { color: #22c55e; }
+.bingo-header.purple { color: #a855f7; }
+
+/* Number cells */
+.bingo-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.bingo-cell:hover {
+  background: #1e293b;
+  transform: scale(1.05);
+}
+
+/* Free space */
+.free-space {
+  background: #22c55e !important;
+  color: white !important;
+}
+
+/* Marked */
+.marked {
+  background: #0f172a;
+  color: #22c55e;
+  font-size: 1.5rem;
+}
+#game-section h1 {
+  display: none !important;
+}
+
+        .card-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 1rem;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .card-selection-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background-color: #1E293B;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .card-selection-item.selected {
+            background-color: #38BDF8;
+            color: #0F172A;
+        }
+        .long-board-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: #1E293B;
+            border-radius: 0.75rem;
+        }
+        .long-board-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: #334155;
+        }
+        .long-board-number.marked {
+            background-color: #6EE7B7;
+            color: #1E293B;
+            font-weight: bold;
+        }
+        .called-number-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            color: #0F172A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .message-box {
+            position: fixed;
+            bottom: 6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            color: white;
+            z-index: 2000;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            animation: fadeInOut 5s forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .admin-dashboard-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+        }
+
+       /* Info box small tweak */
+#game-info-box { 
+  backdrop-filter: blur(4px); 
+}
+#game-info-box .grid div { 
+  min-height: 44px;
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center;
+}
+#game-info-box div .text-gray-400 { font-size: 12px; }
+#game-info-box div .font-bold { font-size: 16px; }
+.card-selection-item {
+    padding: 10px;
+    border: 2px solid #4cafef;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    background: #1e293b;
+    color: white;
+}
+
+.card-selection-item:hover {
+    background: #334155;
+}
+
+.card-selection-item.taken-card {
+    background: #ef4444;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+   
+ </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex flex-col items-center">
+
+    <main class="container mx-auto p-4 flex-grow w-full max-w-lg">
+        <!-- Game Section -->
+        <div id="game-section" class="page-section active pt-8">
+            <!-- Header (visual upgrade) -->
+<div class="text-center mb-8">
+  <h1 class="text-4xl font-extrabold tracking-tight mb-2">
+    <span class="text-sky-400">TOP</span>
+    <span class="text-white">BINGO</span>
+  </h1>
+
+</div>
+
+            <!-- Room Selection -->
+            <div id="room-selection-container">
+  <h2 class="text-xl font-semibold mb-6 text-center text-gray-300">መርጠው ይጫወቱ !</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <!-- 10 br room -->
+    <div class="room-card bg-slate-800 rounded-2xl shadow-md p-5 text-center cursor-pointer hover:scale-105 transform transition" data-room="room_10">
+      <div class="flex justify-center mb-2">
+        <i class="fas fa-dice text-4xl text-blue-400"></i>
+      </div>
+      <h3 class="text-yellow-400 font-bold text-lg">ባለ 10 ብር</h3>
+      <p class="text-gray-400 text-sm">Players: <span class="jackpot-display" data-room="room_10">0</span></p>
+      <button class="mt-3 w-full py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl">Join Room</button>
+    </div>
+
+    <!-- 20 br room -->
+    <div class="room-card bg-slate-800 rounded-2xl shadow-md p-5 text-center cursor-pointer hover:scale-105 transform transition" data-room="room_20">
+      <div class="flex justify-center mb-2">
+        <i class="fas fa-laugh-beam text-4xl text-blue-400"></i>
+      </div>
+      <h3 class="text-yellow-400 font-bold text-lg">ባለ 20 ብር</h3>
+      <p class="text-gray-400 text-sm">Players: <span class="jackpot-display" data-room="room_20">0</span></p>
+      <button class="mt-3 w-full py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl">Join Room</button>
+    </div>
+
+    <!-- 50 br room -->
+    <div class="room-card bg-slate-800 rounded-2xl shadow-md p-5 text-center cursor-pointer hover:scale-105 transform transition" data-room="room_50">
+      <div class="flex justify-center mb-2">
+        <i class="fas fa-trophy text-4xl text-blue-400"></i>
+      </div>
+      <h3 class="text-yellow-400 font-bold text-lg">ባለ 50 ብር</h3>
+      <p class="text-gray-400 text-sm">Players: <span class="jackpot-display" data-room="room_50">0</span></p>
+      <button class="mt-3 w-full py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl">Join Room</button>
+    </div>
+
+    <!-- 100 br room -->
+    <div class="room-card bg-slate-800 rounded-2xl shadow-md p-5 text-center cursor-pointer hover:scale-105 transform transition" data-room="room_100">
+      <div class="flex justify-center mb-2">
+        <i class="fas fa-star text-4xl text-blue-400"></i>
+      </div>
+      <h3 class="text-yellow-400 font-bold text-lg">ባለ 100 ብር</h3>
+      <p class="text-gray-400 text-sm">Players: <span class="jackpot-display" data-room="room_100">0</span></p>
+      <button class="mt-3 w-full py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl">Join Room</button>
+    </div>
+  </div>
+</div>
+
+            <!-- Card Selection -->
+            <div id="card-selection-container" class="hidden">
+                <h2 class="text-2xl font-bold mb-4">Select Your Cards</h2>
+                <p class="text-gray-400 mb-4">Choose between 1 and 4 cards to play. Jackpot increases with more cards!</p>
+                <div id="card-selection-grid" class="card-selection-grid p-4 bg-slate-800 rounded-xl shadow-inner"></div>
+                <div class="mt-4 flex flex-col items-center gap-2">
+                    <p id="cards-selected-info" class="text-lg font-bold text-center">0/4 cards selected</p>
+                    <button id="start-game-btn" class="w-full px-6 py-3 mt-4 text-lg font-bold text-white bg-blue-500 rounded-xl shadow-lg transition-colors hover:bg-blue-600 disabled:bg-gray-500" disabled>
+                        Start Game
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div id="game-board-container" class="hidden">
+            <!-- Info Box (put at top of #game-board-container) -->
+<div id="game-info-box" class="w-full bg-slate-800 rounded-xl shadow-md p-3 mb-4 text-sm text-center">
+  <div class="grid grid-cols-4 gap-2">
+    <div>
+      <div class="text-gray-400">Players</div>
+      <div id="info-players" class="text-white font-bold">0</div>
+    </div>
+    <div>
+      <div class="text-gray-400">Amount</div>
+      <div id="info-amount" class="text-green-400 font-bold">0</div>
+    </div>
+    <div>
+      <div class="text-gray-400">Jackpot</div>
+      <div id="info-jackpot" class="text-yellow-400 font-bold">0</div>
+    </div>
+    <div>
+      <div class="text-gray-400">Called</div>
+      <div id="info-called" class="text-sky-400 font-bold">0 / 75</div>
+    </div>
+  </div>
+</div>              
+
+  <div class="flex flex-col items-center">
+                    <p id="game-status" class="text-xl font-bold mb-2 text-center text-blue-400">Waiting for players...</p>
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <p class="text-gray-400 text-sm">Called Numbers: <span id="called-numbers-count" class="font-bold text-white">0</span>/75</p>
+                    </div>
+                    <div class="flex flex-col items-center mb-6">
+                        <div id="called-number-circle" class="called-number-circle">00</div>
+                        <p class="text-sm text-gray-400 mt-2">Latest Number</p>
+                    </div>
+
+                    <div id="cards-container" class="flex flex-col gap-4 w-full"></div>
+
+                    <button id="bingo-btn" class="w-full px-6 py-3 mt-6 text-lg font-bold text-white bg-green-500 rounded-xl shadow-lg transition-colors hover:bg-green-600">
+                        <i class="fas fa-star mr-2"></i> BINGO!
+                    </button>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold mb-4 text-center">Called Numbers</h3>
+                    <div id="long-board" class="long-board-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wallet Section -->
+        <div id="wallet-section" class="page-section pt-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Wallet</h2>
+            <div class="flex items-center justify-between p-4 bg-slate-800 rounded-xl shadow-lg mb-6">
+                <span class="text-lg text-gray-400">Your Balance:</span>
+                <span id="wallet-balance" class="text-3xl font-bold text-green-400">0.00</span>
+            </div>
+
+            <div class="w-full max-w-sm mx-auto flex">
+                <button id="deposit-tab-btn" class="flex-1 p-3 text-center rounded-tl-xl rounded-bl-xl transition-colors bg-slate-700 active-tab">
+                    Deposit
+                </button>
+                <button id="withdraw-tab-btn" class="flex-1 p-3 text-center transition-colors bg-slate-700">
+                    Withdraw
+                </button>
+                <button id="requests-tab-btn" class="flex-1 p-3 text-center rounded-tr-xl rounded-br-xl transition-colors bg-slate-700">
+                    My Requests
+                </button>
+            </div>
+
+            <div id="deposit-form-container" class="mt-4 p-6 bg-slate-800 rounded-xl shadow-lg active-tab-content">
+                <h3 class="text-xl font-bold mb-2">Request Deposit</h3>
+                <p class="text-sm text-gray-400 mb-4">Enter the amount you wish to deposit. An admin will approve it shortly.</p>
+                <form id="deposit-form" class="flex flex-col gap-4">
+                    <div>
+                        <label for="deposit-amount" class="text-sm text-gray-400">Amount</label>
+                        <input type="number" id="deposit-amount" class="w-full mt-1 p-3 bg-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="e.g. 50" min="1" required>
+                    </div>
+                    <button type="submit" class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-xl shadow-lg transition-colors hover:bg-blue-600">
+                        Request Deposit
+                    </button>
+                </form>
+            </div>
+
+            <div id="withdraw-form-container" class="mt-4 p-6 bg-slate-800 rounded-xl shadow-lg hidden">
+                <h3 class="text-xl font-bold mb-2">Request Withdrawal</h3>
+                <p class="text-sm text-gray-400 mb-4">Enter the amount you wish to withdraw.</p>
+                <form id="withdraw-form" class="flex flex-col gap-4">
+                    <div>
+                        <label for="withdraw-amount" class="text-sm text-gray-400">Amount</label>
+                        <input type="number" id="withdraw-amount" class="w-full mt-1 p-3 bg-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="e.g. 20" min="1" required>
+                    </div>
+                    <button type="submit" class="w-full px-6 py-3 text-lg font-bold text-white bg-yellow-500 rounded-xl shadow-lg transition-colors hover:bg-yellow-600">
+                        Request Withdrawal
+                    </button>
+                </form>
+            </div>
+
+            <div id="requests-container" class="mt-4 p-6 bg-slate-800 rounded-xl shadow-lg hidden">
+                <h3 class="text-xl font-bold mb-4">My Requests</h3>
+                <ul id="requests-list" class="flex flex-col gap-4">
+                    <!-- Requests will be populated here by JavaScript -->
+                    <li class="text-gray-400 text-center">No requests found.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div id="leaderboard-section" class="page-section pt-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Leaderboard</h2>
+            <div class="bg-slate-800 p-6 rounded-xl shadow-lg">
+                <ul id="leaderboard-list" class="flex flex-col gap-2">
+                    <li class="flex justify-between items-center py-2 border-b border-slate-700">
+                        <span class="font-bold text-blue-400">1.</span>
+                        <span class="flex-1 ml-4 truncate">Player1</span>
+                        <span class="font-bold text-green-400">Wins: 15</span>
+                    </li>
+                    <li class="flex justify-between items-center py-2 border-b border-slate-700">
+                        <span class="font-bold text-gray-400">2.</span>
+                        <span class="flex-1 ml-4 truncate">Player2</span>
+                        <span class="font-bold text-green-400">Wins: 12</span>
+                    </li>
+                    <li class="flex justify-between items-center py-2">
+                        <span class="font-bold text-gray-400">3.</span>
+                        <span class="flex-1 ml-4 truncate">Player3</span>
+                        <span class="font-bold text-green-400">Wins: 10</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile-section" class="page-section pt-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Profile</h2>
+            <div class="p-6 bg-slate-800 rounded-xl shadow-lg flex flex-col items-center">
+                <div class="w-24 h-24 bg-gray-600 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-user text-5xl text-gray-400"></i>
+                </div>
+                <h3 id="profile-username" class="text-2xl font-bold mb-1">Username</h3>
+                <p id="profile-user-id" class="text-sm text-gray-400 mb-4">User ID:</p>
+                <div class="w-full flex justify-between gap-4 text-center">
+                    <div class="flex-1 p-4 bg-slate-700 rounded-xl">
+                        <p class="text-sm text-gray-400">Total Wins:</p>
+                        <p id="profile-wins" class="text-xl font-bold text-green-400">0</p>
+                    </div>
+                    <div class="flex-1 p-4 bg-slate-700 rounded-xl">
+                        <p class="text-sm text-gray-400">Games Played:</p>
+                        <p id="profile-games-played" class="text-xl font-bold text-blue-400">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Section -->
+        <div id="admin-section" class="page-section pt-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Admin Dashboard</h2>
+            <div class="p-6 bg-slate-800 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Pending Requests</h3>
+                <div class="flex justify-between font-bold text-gray-400 mb-2">
+                    <span class="w-1/4">Type</span>
+                    <span class="w-1/4">User ID</span>
+                    <span class="w-1/4">Amount</span>
+                    <span class="w-1/4 text-right">Actions</span>
+                </div>
+                <ul id="admin-requests-list" class="flex flex-col gap-2">
+                    <!-- Requests will be populated by JavaScript -->
+                    <li class="text-gray-400 text-center py-4">No pending requests.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <div id="message-container"></div>
+    <button id="admin-btn" class="admin-dashboard-btn px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hidden">
+        Admin Dashboard
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar grid grid-cols-4 gap-4">
+        <div class="navbar-item active" data-page="game-section">
+            <i class="fas fa-dice text-xl mb-1"></i>
+            <span class="text-xs">Game</span>
+        </div>
+        <div class="navbar-item" data-page="wallet-section">
+            <i class="fas fa-wallet text-xl mb-1"></i>
+            <span class="text-xs">Wallet</span>
+        </div>
+        <div class="navbar-item" data-page="leaderboard-section">
+            <i class="fas fa-trophy text-xl mb-1"></i>
+            <span class="text-xs">Leaderboard</span>
+        </div>
+        <div class="navbar-item" data-page="profile-section">
+            <i class="fas fa-user-circle text-xl mb-1"></i>
+            <span class="text-xs">Profile</span>
+        </div>
+    </nav>
+
+    <script>
+        
+        function showWalletTab(tabId) {
+            const tabs = {
+                'deposit': depositFormContainer,
+                'withdraw': withdrawFormContainer,
+                'requests': requestsContainer
+            };
+            const tabButtons = {
+                'deposit': depositTabBtn,
+                'withdraw': withdrawTabBtn,
+                'requests': requestsTabBtn
+            };
+
+            for (const key in tabs) {
+                tabs[key].classList.add('hidden');
+                tabButtons[key].classList.remove('active-tab');
+                tabButtons[key].classList.add('bg-slate-700');
+            }
+            tabs[tabId].classList.remove('hidden');
+            tabButtons[tabId].classList.add('active-tab', 'bg-blue-600');
+            tabButtons[tabId].classList.remove('bg-slate-700');
+        }
+
+        // Add event listeners for navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const pageId = item.dataset.page;
+                showPage(pageId);
+            });
+        });
+
+        // Add event listeners for wallet tabs
+        depositTabBtn.addEventListener('click', () => showWalletTab('deposit'));
+        withdrawTabBtn.addEventListener('click', () => showWalletTab('withdraw'));
+        requestsTabBtn.addEventListener('click', () => showWalletTab('requests'));
+
+        // Show admin button if user is an admin
+        if (IS_ADMIN) {
+            adminBtn.classList.remove('hidden');
+            adminBtn.addEventListener('click', () => showPage('admin-section'));
+        }
+
+
+        function showMessage(message, type = 'info') {
+            const messageEl = document.createElement('div');
+            messageEl.textContent = message;
+            messageEl.className = `message-box rounded-lg shadow-lg text-white p-4`;
+
+            if (type === 'success') {
+                messageEl.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                messageEl.classList.add('bg-red-500');
+            } else {
+                messageEl.classList.add('bg-blue-500');
+            }
+
+            document.getElementById('message-container').appendChild(messageEl);
+
+            setTimeout(() => {
+                messageEl.remove();
+            }, 5000);
+
+ }
+
+
+
+function showWinnerPopup(winnerId, winnerCard, winningPattern) {
+    // Remove any existing popup first
+    const existing = document.getElementById('winner-popup');
+    if (existing) existing.remove();
+
+    // Disable Bingo button while popup is visible
+    if (typeof bingoBtn !== 'undefined') bingoBtn.disabled = true;
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'winner-popup';
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50';
+
+    // Create popup container
+    const popup = document.createElement('div');
+    popup.className = 'bg-white p-6 rounded-lg text-center w-80';
+
+    // Winner message
+    const message = document.createElement('h2');
+    message.className = 'text-xl font-bold mb-4';
+    message.textContent = winnerId === myPlayerId ? 'You won! 🎉' : 'Someone else won 😢';
+    popup.appendChild(message);
+
+    // Show winning card with highlighted pattern
+    if (winnerCard) {
+        const cardEl = createBingoCard(winnerCard);
+        if (winningPattern) {
+            winningPattern.forEach(([row, col]) => {
+                const cell = cardEl.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (cell) cell.classList.add('bg-yellow-400', 'text-black');
+            });
+        }
+        popup.appendChild(cardEl);
+    }
+
+    // Buttons container
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'mt-4 flex justify-around';
+
+    // Play Again button
+    const playAgainBtn = document.createElement('button');
+    
+
+    buttonsDiv.appendChild(playAgainBtn);
+    buttonsDiv.appendChild(closeBtn);
+    popup.appendChild(buttonsDiv);
+
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+}
+
+
+        function createBingoCard(cardData) {
+    const cardWrapper = document.createElement('div');
+    cardWrapper.className = "bingo-wrapper";
+
+    // Grid container (headers + numbers together)
+    const cardEl = document.createElement('div');
+    cardEl.className = "bingo-grid";
+
+    const colors = ["orange", "red", "yellow", "green", "purple"];
+
+    // Add headers
+    BINGO_LETTERS.forEach((letter, idx) => {
+        const header = document.createElement('div');
+        header.className = `bingo-header ${colors[idx]}`;
+        header.textContent = letter;
+        cardEl.appendChild(header);
+    });
+
+    // Add number cells
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < BINGO_LETTERS.length; j++) {
+            const letter = BINGO_LETTERS[j];
+            const number = cardData[letter][i];
+            const cell = document.createElement('div');
+            cell.className = "bingo-cell";
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+
+            if (number === 0) {
+                cell.textContent = "FREE";
+                cell.classList.add("free-space");
+            } else {
+                cell.textContent = number;
+                cell.dataset.number = number;
+            }
+
+            // Toggle marking
+            cell.addEventListener("click", () => {
+                cell.classList.toggle("marked");
+                if (cell.classList.contains("marked")) {
+                    cell.innerHTML = "✔️";
+                } else {
+                    cell.innerHTML = cell.dataset.number || "FREE";
+                }
+            });
+
+            cardEl.appendChild(cell);
+        }
+    }
+
+    cardWrapper.appendChild(cardEl);
+    return cardWrapper;
+}
+
+
+function updateGameInfoFromStatus(status) {
+  // status is the object for the current room (from room_status_update)
+  if (!status) return;
+  if (infoPlayersEl) infoPlayersEl.textContent = status.players ?? '0';
+  if (infoAmountEl)  infoAmountEl.textContent  = (status.cost ?? 0);
+  if (infoJackpotEl)  infoJackpotEl.textContent  = (status.jackpot ?? 0);
+  // called count may come from `status.calledCount` OR be updated live via number_called events
+  if (infoCalledEl)  infoCalledEl.textContent   = `${status.calledCount ?? (status.calledNumbers ? status.calledNumbers.length : 0)}/75`;
+}
+
+                       
+
+        function markNumber(number) {
+            const cells = document.querySelectorAll(`.bingo-cell[data-number="${number}"]`);
+            cells.forEach(cell => {
+                cell.classList.add('marked');
+            });
+
+            const longBoardNumbers = document.querySelectorAll('.long-board-number');
+            longBoardNumbers.forEach(el => {
+                if (parseInt(el.textContent) === number) {
+                    el.classList.add('marked');
+                }
+            });
+        }
+
+        function renderCalledNumbers(numbers) {
+            longBoardEl.innerHTML = '';
+            for (let i = 1; i <= 75; i++) {
+                const numberEl = document.createElement('div');
+                numberEl.className = 'long-board-number';
+                numberEl.textContent = i;
+                if (numbers.includes(i)) {
+                    numberEl.classList.add('marked');
+                }
+                longBoardEl.appendChild(numberEl);
+            }
+        }
+
+        // Populate room selection listeners
+        // ===== Room Join Logic =====
+        
+       function attachRoomJoinListeners() {
+  document.querySelectorAll('.room-card button').forEach(button => {
+    button.removeEventListener && button.removeEventListener('click', () => {}); // safe remove
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = button.closest('.room-card');
+      if (!card) return;
+      const roomId = card.dataset.room;
+      currentRoomId = roomId;
+      ws.send(JSON.stringify({ type: 'join_room', roomId, userId: myUserId }));
+      if (roomSelectionContainer) roomSelectionContainer.classList.add('hidden');
+      if (cardSelectionContainer) cardSelectionContainer.classList.remove('hidden');
+      generateCardSelection();
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', attachRoomJoinListeners);
+                   
+
+  
+        // Event listener for Bingo button
+        bingoBtn.addEventListener('click', () => {
+            if (!currentRoomId) return;
+            ws.send(JSON.stringify({ type: 'claim_bingo', playerId: myPlayerId, roomId: currentRoomId }));
+        });
+
+        // Handle deposit form submission
+        document.getElementById('deposit-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const amount = parseInt(document.getElementById('deposit-amount').value);
+            if (isNaN(amount) || amount <= 0) {
+                showMessage('Please enter a valid amount.', 'error');
+                return;
+            }
+            ws.send(JSON.stringify({ type: 'request_deposit', amount, userId: myUserId }));
+            document.getElementById('deposit-form').reset();
+        });
+
+        // Handle withdrawal form submission
+        document.getElementById('withdraw-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const amount = parseInt(document.getElementById('withdraw-amount').value);
+            if (isNaN(amount) || amount <= 0) {
+                showMessage('Please enter a valid amount.', 'error');
+                return;
+            }
+            ws.send(JSON.stringify({ type: 'request_withdrawal', amount, userId: myUserId }));
+            document.getElementById('withdraw-form').reset();
+        });
+
+        function renderRequests(requests) {
+            requestsList.innerHTML = '';
+            if (requests.length === 0) {
+                requestsList.innerHTML = '<li class="text-gray-400 text-center">No requests found.</li>';
+                return;
+            }
+            requests.forEach(req => {
+                const li = document.createElement('li');
+                let statusColor = 'text-yellow-400';
+                if (req.status === 'approved') {
+                    statusColor = 'text-green-400';
+                } else if (req.status === 'rejected') {
+                    statusColor = 'text-red-400';
+                }
+                li.className = 'flex justify-between items-center p-2 bg-slate-700 rounded-lg';
+                li.innerHTML = `
+                    <span class="text-sm font-semibold">${req.type.toUpperCase()}</span>
+                    <span class="text-sm">${req.amount}</span>
+                    <span class="font-bold ${statusColor}">${req.status.toUpperCase()}</span>
+                `;
+                requestsList.appendChild(li);
+            });
+        }
+
+
+function generateCardSelection() {
+  if (!currentRoomId) return;
+  // Ask server for the room's 1..100 cards (id + takenBy)
+  ws.send(JSON.stringify({
+    type: 'get_cards',
+    roomId: currentRoomId
+  }));
+}  
+function renderRoomCards(cards) {
+  // Expect cards: [{ id, takenBy }, ...]
+  cardSelectionGrid.innerHTML = '';
+
+  // Make sure it's an array
+  if (!Array.isArray(cards)) cards = [];
+
+  // Reset selectedCards and re-populate from server authoritative state
+  selectedCards = [];
+
+  cards.forEach(card => {
+    const cardId = Number(card.id);
+    const cardEl = document.createElement('div');
+    cardEl.className = 'card-selection-item';
+    cardEl.textContent = cardId;
+    cardEl.dataset.cardId = String(cardId);
+
+    if (card.takenBy) {
+      cardEl.classList.add('taken-card');
+      if (card.takenBy === myUserId) {
+        cardEl.classList.add('selected');
+        if (!selectedCards.includes(cardId)) selectedCards.push(cardId);
+      }
+    }
+
+    cardEl.addEventListener('click', () => {
+      // already taken?
+      if (cardEl.classList.contains('taken-card')) {
+        alert("This card is already taken!");
+        return;
+      }
+
+      // deselect local
+      if (selectedCards.includes(cardId)) {
+        selectedCards = selectedCards.filter(id => id !== cardId);
+        cardEl.classList.remove('selected');
+        updateSelectedInfo();
+        // optional server release call if your server supports it (not required)
+        return;
+      }
+
+      // enforce max
+      if (selectedCards.length >= MAX_SELECTION) {
+        alert(`You can select up to ${MAX_SELECTION} cards.`);
+        return;
+      }
+
+      // request selection — wait for server confirmation
+      ws.send(JSON.stringify({
+        type: 'select_card',
+        roomId: currentRoomId,
+        cardId: cardId,
+        userId: myUserId
+      }));
+    });
+
+    cardSelectionGrid.appendChild(cardEl);
+  });
+
+  updateSelectedInfo();
+}
+    
+     
+// ----- Update selected info and start button -----
+function updateSelectedInfo() {
+    cardsSelectedInfo.textContent = `${selectedCards.length}/4 cards selected`;
+    // change to desired minimum required to enable start:
+    startGameBtn.disabled = selectedCards.length < 1;
+}
+
+        
+        function renderAdminRequests(requests) {
+            adminRequestsList.innerHTML = '';
+            if (requests.length === 0) {
+                adminRequestsList.innerHTML = '<li class="text-gray-400 text-center py-4">No pending requests.</li>';
+                return;
+            }
+            requests.forEach(req => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center py-2 border-b border-slate-700 last:border-b-0';
+                li.innerHTML = `
+                    <div class="w-1/4 text-sm font-bold truncate">${req.type.toUpperCase()}</div>
+                    <div class="w-1/4 text-sm truncate" title="${req.userId}">${req.userId}</div>
+                    <div class="w-1/4 text-sm font-bold text-yellow-400">${req.amount}</div>
+                    <div class="w-1/4 flex gap-2 justify-end">
+                        <button class="approve-btn bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 text-xs" data-request-id="${req.id}">Approve</button>
+                        <button class="reject-btn bg-red-500 hover:bg-red-600 text-white rounded-lg p-2 text-xs" data-request-id="${req.id}">Reject</button>
+                    </div>
+                `;
+                adminRequestsList.appendChild(li);
+            });
+
+            // Add event listeners to the new buttons
+            document.querySelectorAll('.approve-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const requestId = e.target.dataset.requestId;
+                    ws.send(JSON.stringify({ type: 'approve_request', requestId }));
+                });
+            });
+
+            document.querySelectorAll('.reject-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const requestId = e.target.dataset.requestId;
+                    ws.send(JSON.stringify({ type: 'reject_request', requestId }));
+                });
+            });
+        }
+ws.onmessage = event => {
+  const data = JSON.parse(event.data);
+
+  switch (data.type) {
+
+    // ------------------ PLAYER DATA ------------------
+    case "player_data":
+      walletBalanceEl.textContent = data.balance;
+      profileUsernameEl.textContent = `User ${data.userId.substring(5,9)}`;
+      profileUserIdEl.textContent = `User ID: ${data.userId}`;
+      profileWinsEl.textContent = data.wins;
+      profileGamesPlayedEl.textContent = data.gamesPlayed;
+      renderRequests(data.requests || []);
+      break;
+
+    case "balance_update":
+      walletBalanceEl.textContent = data.balance;
+      break;
+
+    // ------------------ ROOM STATUS ------------------
+    case "room_status_update":
+      for (const roomId in data.room_status) {
+        const status = data.room_status[roomId];
+        const playerEl = document.querySelector(`.room-card[data-room="${roomId}"] p:nth-child(2)`);
+        const jackpotEl = document.querySelector(`.jackpot-display[data-room="${roomId}"]`);
+        const costEl = document.querySelector(`.cost-display[data-room="${roomId}"]`);
+
+        if (playerEl) playerEl.textContent = `${status.players} Players`;
+        if (jackpotEl) jackpotEl.textContent = `${status.jackpot} coins`;
+        if (costEl) costEl.textContent = status.cost;
+      }
+      break;
+
+    // ------------------ ROOM JOIN ------------------
+    case "room_joined":
+      myPlayerId = data.playerId;
+      currentRoomId = data.roomId;
+      walletBalanceEl.textContent = data.balance;
+
+      // Show card selection, hide bingo board
+      cardSelectionContainer.classList.remove("hidden");
+      gameBoardContainerEl.classList.add("hidden");
+      gameStatusEl.textContent = "Select up to 4 cards...";
+      renderCalledNumbers([]);
+      break;
+
+    // ------------------ SHOW CARDS ------------------
+    case "room_cards":
+  // Selection-phase: server sends [{id, takenBy}, ...]
+  if (data.roomId === currentRoomId) {
+    renderRoomCards(data.cards);
+  }
+  break;
+
+case "show_cards":
+  // Game-phase: server sends formatted cards for player {B,I,N,G,O}
+  if (data.phase === 'game' || Array.isArray(data.cards) ) {
+    myCards = data.cards || data.cards;
+    cardsContainerEl.innerHTML = '';
+    myCards.forEach(card => {
+      cardsContainerEl.appendChild(createBingoCard(card));
+    });
+    cardSelectionContainer.classList.add('hidden');
+    gameBoardContainerEl.classList.remove('hidden');
+    gameStatusEl.textContent = 'Game in progress!';
+  }
+  break;
+
+    // ------------------ CARD SELECTION ------------------
+    case 'card_selected': {
+  if (data.roomId === currentRoomId) {
+    const cardId = Number(data.cardId);
+    if (!selectedCards.includes(cardId)) selectedCards.push(cardId);
+    const cardEl = document.querySelector(`[data-card-id="${cardId}"]`);
+    if (cardEl) cardEl.classList.add('selected');
+    updateSelectedInfo();
+  }
+  break;
+}
+
+case 'card_taken': {
+  if (data.roomId === currentRoomId) {
+    const cardId = Number(data.cardId);
+    const owner = data.userId;
+    const cardEl = document.querySelector(`[data-card-id="${cardId}"]`);
+    if (cardEl) {
+      cardEl.classList.add('taken-card');
+      if (owner === myUserId) {
+        cardEl.classList.add('selected');
+        if (!selectedCards.includes(cardId)) selectedCards.push(cardId);
+      } else {
+        // someone else took it: remove from our selectedCards if present
+        if (selectedCards.includes(cardId)) {
+          selectedCards = selectedCards.filter(id => id !== cardId);
+          cardEl.classList.remove('selected');
+        }
+      }
+    }
+    updateSelectedInfo();
+  }
+  break;
+}
+        
+    case "card_rejected":
+      alert("Card selection failed: " + (data.reason || "unknown"));
+      break;
+
+    // ------------------ GAME NUMBERS ------------------
+    case "number_called":
+      if (data.countdown) {
+        if (countdownEl) countdownEl.textContent = data.number;
+        gameStatusEl.textContent = `Game starting in ${data.number}...`;
+      } else {
+        markNumber(data.number);
+        if (calledNumberCircleEl) calledNumberCircleEl.textContent = data.number;
+        if (calledNumbersCountEl) calledNumbersCountEl.textContent = data.calledNumbers.length;
+        if (infoCalledEl) infoCalledEl.textContent = `${data.calledNumbers.length}/75`;
+      }
+      break;
+
+    // ------------------ BINGO ------------------
+    case "bingo_win":
+      gameStatusEl.textContent = data.winnerId === myPlayerId ? "BINGO! You won!" : "BINGO! Someone else won.";
+      showMessage(
+        data.winnerId === myPlayerId
+          ? "BINGO! You won the game!"
+          : "Someone else called BINGO first. Better luck next time.",
+        data.winnerId === myPlayerId ? "success" : "error"
+      );
+      showWinnerPopup(data.winnerId, data.winnerCard, data.winningPattern);
+      bingoBtn.disabled = true;
+      break;
+
+    case "bingo_lose":
+      gameStatusEl.textContent = "BINGO! Someone else won.";
+      showMessage("Someone else called BINGO first. Better luck next time.", "error");
+      bingoBtn.disabled = true;
+      break;
+
+    case "invalid_bingo":
+      gameStatusEl.textContent = "Game in progress.";
+      showMessage("Sorry, that is not a valid BINGO.", "error");
+      break;
+
+    case "game_end":
+      gameStatusEl.textContent = "Game Over. No winner.";
+      break;
+
+    // ------------------ ERRORS ------------------
+    case "error":
+      showMessage(data.message, "error");
+      break;
+  }
+};
+
+// ------------------ INITIAL REQUESTS ------------------
+showPage("game-section");
+ws.addEventListener("open", () => {
+  ws.send(JSON.stringify({ type: "get_player_data", userId: myUserId }));
+  ws.send(JSON.stringify({ type: "get_room_status" }));
+});
+             
+    </script>
+</body>
+</html>

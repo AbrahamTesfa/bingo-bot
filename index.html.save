@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><title>Top Bingo</title>
+<style>
+body{font-family:sans-serif;background:#111;color:#fff;text-align:center;}
+.bingo-cell{width:40px;height:40px;display:inline-block;margin:2px;line-height:40px;background:#333;cursor:pointer;}
+.bingo-cell.marked{background:orange;color:#000;}
+</style>
+</head>
+<body>
+<h1>Top Bingo</h1>
+<div id="room-selection">
+  <button data-room="room_10">Join 10 Birr Room</button>
+  <button data-room="room_20">Join 20 Birr Room</button>
+</div>
+<div id="game" style="display:none">
+  <h2>Game Board</h2>
+  <div id="cards"></div>
+  <button id="bingo-btn">Bingo!</button>
+  <div id="called-numbers"></div>
+</div>
+
+<script>
+let ws = new WebSocket('ws://<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><title>Top Bingo</title>
+<style>
+body{font-family:sans-serif;background:#111;color:#fff;text-align:center;}
+.bingo-cell{width:40px;height:40px;display:inline-block;margin:2px;line-height:40px;background:#333;cursor:pointer;}
+.bingo-cell.marked{background:orange;color:#000;}
+</style>
+</head>
+<body>
+<h1>Top Bingo</h1>
+<div id="room-selection">
+  <button data-room="room_10">Join 10 Birr Room</button>
+  <button data-room="room_20">Join 20 Birr Room</button>
+</div>
+<div id="game" style="display:none">
+  <h2>Game Board</h2>
+  <div id="cards"></div>
+  <button id="bingo-btn">Bingo!</button>
+  <div id="called-numbers"></div>
+</div>
+
+<script>
+let ws = new WebSocket('ws://YOUR_IP_ADDRESS:3000');
+let myPlayerId='', currentRoomId='', myCards=[], numbersCalled=[];
+const cardsEl=document.getElementById('cards'), calledEl=document.getElementById('called-numbers');
+
+function createCard(card){
+  const div=document.createElement('div');
+  for(const l of ['B','I','N','G','O']){
+    for(let i=0;i<5;i++){
+      const cell=document.createElement('div');
+      const num=card[l][i];
+      cell.textContent=num||'Free';
+      cell.className='bingo-cell'+(num===0?' marked':'');
+      cell.dataset.number=num;
+      cell.onclick=()=>cell.classList.toggle('marked');
+      div.appendChild(cell);
+    }
+  }
+  return div;
+}
+
+function markNumber(number){
+  document.querySelectorAll(`[data-number='${number}']`).forEach(c=>c.classList.add('marked'));
+}
+
+ws.onmessage = e=>{
+  const data=JSON.parse(e.data);
+  switch(data.type){
+    case 'room_joined':
+      myPlayerId=data.playerId; currentRoomId=data.roomId;
+      document.getElementById('room-selection').style.display='none';
+      document.getElementById('game').style.display='block';
+      break;
+    case 'game_started':
+      myCards=data.cards; cardsEl.innerHTML=''; myCards.forEach(c=>cardsEl.appendChild(createCard(c)));
+      break;
+    case 'number_called':
+      numbersCalled.push(data.number); markNumber(data.number);
+      calledEl.textContent='Numbers called: '+numbersCalled.join(', ');
+      break;
+    case 'bingo_claimed':
+      alert(`${data.winnerId} won ${data.jackpot} Birr!`); location.reload(); break;
+    case 'invalid_bingo': alert('Not a Bingo!'); break;
+  }
+};
+
+document.querySelectorAll('#room-selection button').forEach(btn=>{
+  btn.onclick=()=>ws.send(JSON.stringify({type:'join_room', roomId:btn.dataset.room,numCards:1}));
+});
+
+document.getElementById('bingo-btn').onclick=()=>ws.send(JSON.stringify({type:'claim_bingo', roomId:currentRoomId}));
+</script>
+</body>
+</html>S:3000');
+let myPlayerId='', currentRoomId='', myCards=[], numbersCalled=[];
+const cardsEl=document.getElementById('cards'), calledEl=document.getElementById('called-numbers');
+
+function createCard(card){
+  const div=document.createElement('div');
+  for(const l of ['B','I','N','G','O']){
+    for(let i=0;i<5;i++){
+      const cell=document.createElement('div');
+      const num=card[l][i];
+      cell.textContent=num||'Free';
+      cell.className='bingo-cell'+(num===0?' marked':'');
+      cell.dataset.number=num;
+      cell.onclick=()=>cell.classList.toggle('marked');
+      div.appendChild(cell);
+    }
+  }
+  return div;
+}
+
+function markNumber(number){
+  document.querySelectorAll(`[data-number='${number}']`).forEach(c=>c.classList.add('marked'));
+}
+
+ws.onmessage = e=>{
+  const data=JSON.parse(e.data);
+  switch(data.type){
+    case 'room_joined':
+      myPlayerId=data.playerId; currentRoomId=data.roomId;
+      document.getElementById('room-selection').style.display='none';
+      document.getElementById('game').style.display='block';
+      break;
+    case 'game_started':
+      myCards=data.cards; cardsEl.innerHTML=''; myCards.forEach(c=>cardsEl.appendChild(createCard(c)));
+      break;
+    case 'number_called':
+      numbersCalled.push(data.number); markNumber(data.number);
+      calledEl.textContent='Numbers called: '+numbersCalled.join(', ');
+      break;
+    case 'bingo_claimed':
+      alert(`${data.winnerId} won ${data.jackpot} Birr!`); location.reload(); break;
+    case 'invalid_bingo': alert('Not a Bingo!'); break;
+  }
+};
+
+document.querySelectorAll('#room-selection button').forEach(btn=>{
+  btn.onclick=()=>ws.send(JSON.stringify({type:'join_room', roomId:btn.dataset.room,numCards:1}));
+});
+
+document.getElementById('bingo-btn').onclick=()=>ws.send(JSON.stringify({type:'claim_bingo', roomId:currentRoomId}));
+</script>
+</body>
+</html>
