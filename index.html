@@ -627,9 +627,7 @@
     <script>
        
   // --- WebSocket Setup ---
-  const wsProtocol = (window.location.protocol === "https:") ? "wss:" : "ws:";
-  const ws = new WebSocket(`${wsProtocol}//${window.location.host}`);
-
+  const ws = new WebSocket("wss://bingo-bot-production.up.railway.app");
   // --- Generate or Retrieve User Phone ---
   function getUserPhone() {
   let phone = localStorage.getItem('bingoPhone');
