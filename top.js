@@ -310,6 +310,10 @@ room.gameInterval = setInterval(() => {
 if (!availableNumbers.length || !room.players.length) {
 clearInterval(room.gameInterval);
 room.gameStarted = false;
+ // 🔥 RESET CARDS FOR NEXT GAME
+      room.cards.forEach(card => {
+        card.takenBy = null;
+      });
 room.players.forEach(p => p.send(JSON.stringify({ type: "game_end" })));
 return;
 }
@@ -378,6 +382,11 @@ function startRoomCountdown(roomId) {
         roomId,
         timeLeft: 0
       });
+      
+      // Important reset
+  room.cards.forEach(card => {
+    card.takenBy = null;
+  });
 
       // Start the actual game
       startGame(roomId);
