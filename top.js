@@ -1,5 +1,6 @@
 // ----- Imports -----
 const express = require("express");
+require('./telegram');
 const http = require("http");
 const WebSocket = require("ws");
 const path = require("path");
