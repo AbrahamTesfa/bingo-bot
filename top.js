@@ -1,6 +1,5 @@
 // ----- Imports -----
 const express = require("express");
-require('./telegram');
 const http = require("http");
 const WebSocket = require("ws");
 const path = require("path");
@@ -980,10 +979,26 @@ app.get("/", (req, res) => {
 });
 
 // ----- Start server -----
+// ----- Start server -----
 (async () => {
   await initDB();
   loadFixedCards();
   await loadRooms();
   const PORT = process.env.PORT || 3000;
-  server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+  server.listen(PORT, async () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+
+    // === Telegram init moved here ===
+    try {
+      const initTelegram = require('./telegram'); // require after server is listening
+      if (typeof initTelegram === 'function') {
+        await initTelegram({ app, server });
+        console.log("✅ Telegram module initialized.");
+      } else {
+        console.log("ℹ️ Telegram module did not export an init function — skipping.");
+      }
+    } catch (err) {
+      console.error("⚠️ Telegram initialization failed (continuing without bot):", err.message);
+    }
+  });
 })();
