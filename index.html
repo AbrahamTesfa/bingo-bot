@@ -458,7 +458,7 @@
     </div>
   </div>
 </div>              
-
+<button id="back-btn" onclick="goBack()">⬅ Back</button>
   <div class="flex flex-col items-center">
                     <p id="game-status" class="text-xl font-bold mb-2 text-center text-blue-400">Waiting for players...</p>
                     <div class="flex items-center justify-center gap-4 mb-6">
@@ -755,6 +755,15 @@ if (startGameBtn) {
 }
 
  
+function goBack() {
+    const roomSel = document.getElementById("room-selection-container");
+    const realGame = document.getElementById("game-board-container");
+
+    // If in the real game → go back to home (room selection)
+    realGame.style.display = "none";
+    roomSel.style.display = "block";
+}
+
                     // Function to switch between UI pages
         function showPage(pageId) {
   pageSections.forEach(section => section.classList.remove('active'));
