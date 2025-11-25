@@ -783,15 +783,26 @@ if (startGameBtn) {
 }
 
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault(); // stop page reload
-    const pageId = e.target.getAttribute('data-page');
-    showPage(pageId);
-    // Close the menu after clicking a link
-        hamburgerMenu.classList.add('hidden');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const pageId = link.getAttribute('data-page');
+
+    // Hide all pages
+    document.querySelectorAll('.page-section').forEach(sec => {
+      sec.classList.add('hidden');
+    });
+
+    // Show target page
+    const target = document.getElementById(pageId);
+    if (target) {
+      target.classList.remove('hidden');
+    }
+
+    // Close hamburger menu
+    document.getElementById('hamburger-menu').classList.add('hidden');
   });
 });
-
    
         function showWalletTab(tabId) {
             const tabs = {
