@@ -756,18 +756,25 @@ if (startGameBtn) {
 }
 
  
-                    // Function to switch between UI pages
-        function showPage(pageId) {
-  pageSections.forEach(section => section.classList.remove('active'));
-  navItems.forEach(item => item.classList.remove('active'));
+                    function showPage(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page-section').forEach(sec => {
+    sec.classList.add('hidden');
+  });
 
-  document.getElementById(pageId).classList.add('active');
+  // Show selected page
+  const target = document.getElementById(pageId);
+  if (target) target.classList.remove('hidden');
 
-  // Highlight current menu item
+  // Highlight menu item
+  document.querySelectorAll('#hamburger-menu a').forEach(item =>
+    item.classList.remove('active')
+  );
+
   const navItem = document.querySelector(`#hamburger-menu a[data-page="${pageId}"]`);
   if (navItem) navItem.classList.add('active');
 
-  // Existing WebSocket logic
+  // WebSocket logic
   if (pageId === 'admin-section') {
     ws.send(JSON.stringify({ type: 'get_admin_requests' }));
   } else if (pageId === 'wallet-section') {
@@ -781,7 +788,7 @@ if (startGameBtn) {
     ws.send(JSON.stringify({ type: 'get_room_status' }));
   }
 }
-
+  
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
