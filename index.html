@@ -795,22 +795,14 @@ document.querySelectorAll('#hamburger-menu a').forEach(link => {
 
     const pageId = link.getAttribute('data-page');
 
-    // Hide all pages
-    document.querySelectorAll('.page-section').forEach(sec => {
-      sec.classList.add('hidden');
-    });
+    // Switch page through the main function
+    showPage(pageId);
 
-    // Show target page
-    const target = document.getElementById(pageId);
-    if (target) {
-      target.classList.remove('hidden');
-    }
-
-    // Close hamburger menu
+    // Close menu
     document.getElementById('hamburger-menu').classList.add('hidden');
   });
 });
-   
+       
         function showWalletTab(tabId) {
             const tabs = {
                 'deposit': depositFormContainer,
