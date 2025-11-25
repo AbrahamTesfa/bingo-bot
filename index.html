@@ -757,38 +757,24 @@ if (startGameBtn) {
 
  
                     function showPage(pageId) {
-  // Hide all pages
-  document.querySelectorAll('.page-section').forEach(sec => {
-    sec.classList.add('hidden');
-  });
+pageSections.forEach(section => section.classList.remove('active'));
+navItems.forEach(item => item.classList.remove('active'));
+document.getElementById(pageId).classList.add('active');
+// Highlight current menu item
+const navItem = document.querySelector(#hamburger-menu a[data-page="${pageId}"]);
+if (navItem) navItem.classList.add('active');
 
-  // Show selected page
-  const target = document.getElementById(pageId);
-  if (target) target.classList.remove('hidden');
-
-  // Highlight menu item
-  document.querySelectorAll('#hamburger-menu a').forEach(item =>
-    item.classList.remove('active')
-  );
-
-  const navItem = document.querySelector(`#hamburger-menu a[data-page="${pageId}"]`);
-  if (navItem) navItem.classList.add('active');
-
-  // WebSocket logic
-  if (pageId === 'admin-section') {
-    ws.send(JSON.stringify({ type: 'get_admin_requests' }));
-  } else if (pageId === 'wallet-section') {
-    showWalletTab('deposit');
-    ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
-  } else if (pageId === 'leaderboard-section') {
-    ws.send(JSON.stringify({ type: 'get_leaderboard' }));
-  } else if (pageId === 'profile-section') {
-    ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
-  } else if (pageId === 'game-section') {
-    ws.send(JSON.stringify({ type: 'get_room_status' }));
-  }
+// Existing WebSocket logic                     if (pageId === 'admin-section') {
+ws.send(JSON.stringify({ type: 'get_admin_requests' }));                                      } else if (pageId === 'wallet-section') {
+showWalletTab('deposit');
+ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+} else if (pageId === 'leaderboard-section') {
+ws.send(JSON.stringify({ type: 'get_leaderboard' }));                                         } else if (pageId === 'profile-section') {
+ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+} else if (pageId === 'game-section') {
+ws.send(JSON.stringify({ type: 'get_room_status' }));
 }
-  
+}  
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
