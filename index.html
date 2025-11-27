@@ -756,7 +756,8 @@ if (startGameBtn) {
 }
 
  
-                    function showPage(pageId) {
+                   // Function to switch between UI pages
+function showPage(pageId) {
 pageSections.forEach(section => section.classList.remove('active'));
 navItems.forEach(item => item.classList.remove('active'));
 document.getElementById(pageId).classList.add('active');
@@ -774,20 +775,24 @@ ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
 } else if (pageId === 'game-section') {
 ws.send(JSON.stringify({ type: 'get_room_status' }));
 }
-}  
-document.querySelectorAll('#hamburger-menu a').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
+}
 
-    const pageId = link.getAttribute('data-page');
+document.querySelectorAll('#hamburger-menu a').forEach(link => {                                  link.addEventListener('click', (e) => {
+e.preventDefault();
+const pageId = link.getAttribute('data-page');
 
-    // Switch page through the main function
-    showPage(pageId);
+// Hide all pages                               document.querySelectorAll('.page-section').forEach(sec => {                                       sec.classList.add('hidden');  
+});  
 
-    // Close menu
-    document.getElementById('hamburger-menu').classList.add('hidden');
-  });
+// Show target page                             const target = document.getElementById(pageId);  
+if (target) {                                     target.classList.remove('hidden');            }  
+
+// Close hamburger menu  
+document.getElementById('hamburger-menu').classList.add('hidden');                            });
+
 });
+
+
        
         function showWalletTab(tabId) {
             const tabs = {
