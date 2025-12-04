@@ -321,7 +321,7 @@
              
  <!-- Room Selection -->
 <div id="room-selection-container" 
-     class="page-section flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
+     class="flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
 <div class="w-full mt-2">
   <img src="banner3.png" alt="Bingo Banner" class="w-full max-w-full h-auto object-contain rounded-lg mx-auto" />
 </div>
@@ -756,47 +756,54 @@ if (startGameBtn) {
 }
 
  
-                   // Function to switch pages using "hidden"
+                   const pageSections = document.querySelectorAll('.page-section');
+const navItems = document.querySelectorAll('.navbar-item');
+
 function showPage(pageId) {
-  // Hide all sections
-  document.querySelectorAll('.page-section').forEach(sec => {
-    sec.classList.add('hidden');
-  });
+  // Hide all top-level page sections
+  pageSections.forEach(sec => sec.classList.add('hidden'));
 
-  // Show selected section
+  // Remove active class from navbar items (visual)
+  navItems.forEach(item => item.classList.remove('active'));
+
+  // Show requested page
   const target = document.getElementById(pageId);
-  if (target) target.classList.remove('hidden');
+  if (!target) return;
+  target.classList.remove('hidden');
 
-  // WebSocket logic
+  // Mark the navbar item active (if exists)
+  const navItem = Array.from(navItems).find(n => n.dataset.page === pageId);
+  if (navItem) navItem.classList.add('active');
+
+  // WebSocket / extra logic
   if (pageId === 'admin-section') {
     ws.send(JSON.stringify({ type: 'get_admin_requests' }));
   } else if (pageId === 'wallet-section') {
     showWalletTab('deposit');
-    ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
   } else if (pageId === 'leaderboard-section') {
     ws.send(JSON.stringify({ type: 'get_leaderboard' }));
   } else if (pageId === 'profile-section') {
-    ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
   } else if (pageId === 'game-section') {
     ws.send(JSON.stringify({ type: 'get_room_status' }));
   }
 }
 
-// Handle hamburger menu click
+// attach navbar clicks
+navItems.forEach(item => {
+  item.addEventListener('click', () => showPage(item.dataset.page));
+});
+
+
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
-    
     const pageId = link.getAttribute('data-page');
-
-    // Use our unified function
     showPage(pageId);
-
-    // Close menu
     document.getElementById('hamburger-menu').classList.add('hidden');
   });
-});
-       
+});       
         function showWalletTab(tabId) {
             const tabs = {
                 'deposit': depositFormContainer,
