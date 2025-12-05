@@ -320,8 +320,7 @@
         <div id="game-section" class="page-section  pt-4">
              
  <!-- Room Selection -->
-<div id="room-selection-container" 
-     class="flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
+<section id="room-selection-container" class="flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
 <div class="w-full mt-2">
   <img src="banner3.png" alt="Bingo Banner" class="w-full max-w-full h-auto object-contain rounded-lg mx-auto" />
 </div>
@@ -424,7 +423,7 @@
   </button>
 </div>  
 
-</div>
+</section>
             <!-- Card Selection -->
             <div id="card-selection-container" class="hidden">
                 <div id="card-selection-grid" class="card-selection-grid p-4 bg-slate-800 rounded-xl shadow-inner"></div>
@@ -802,6 +801,13 @@ document.querySelectorAll('#hamburger-menu a').forEach(link => {
     document.getElementById('hamburger-menu').classList.add('hidden');
   });
 });       
+
+window.addEventListener("load", () => {
+    document.getElementById("room-selection-container").classList.remove("hidden");
+    document.getElementById("card-selection-container").classList.add("hidden");
+    document.getElementById("game-board-container").classList.add("hidden");
+});
+
         function showWalletTab(tabId) {
             const tabs = {
                 'deposit': depositFormContainer,
