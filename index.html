@@ -754,7 +754,8 @@ if (startGameBtn) {
   });
 }
 
- 
+window.addEventListener("load", () => {             document.getElementById("room-selection-container").classList.remove("hidden");
+    document.getElementById("card-selection-container").classList.add("hidden");                    document.getElementById("game-board-container").classList.add("hidden");                    }); 
                  
 function showPage(pageId) {
   // Hide all top-level page sections
@@ -801,12 +802,6 @@ document.querySelectorAll('#hamburger-menu a').forEach(link => {
     document.getElementById('hamburger-menu').classList.add('hidden');
   });
 });       
-
-window.addEventListener("load", () => {
-    document.getElementById("room-selection-container").classList.remove("hidden");
-    document.getElementById("card-selection-container").classList.add("hidden");
-    document.getElementById("game-board-container").classList.add("hidden");
-});
 
         function showWalletTab(tabId) {
             const tabs = {
