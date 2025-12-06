@@ -309,7 +309,7 @@
   <!-- Optional Menu Items (hidden on mobile) -->
   <!-- Mobile Dropdown Menu -->
 <div id="hamburger-menu" class="hidden absolute top-14 left-4 bg-slate-700 w-48 rounded-lg shadow-lg flex flex-col p-2 sm:hidden">
-  <a href="#" class="px-4 py-2 hover:bg-cyan-500 rounded" data-page="room-selection-container">Home</a>
+  <a href="#" class="px-4 py-2 hover:bg-cyan-500 rounded" data-page="game-section">Home</a>
   <a href="#" class="px-4 py-2 hover:bg-cyan-500 rounded" data-page="rules-section">Rules</a>
   <a href="#" class="px-4 py-2 hover:bg-cyan-500 rounded" data-page="profile-section">Profile</a>
 </div>
@@ -754,8 +754,7 @@ if (startGameBtn) {
   });
 }
 
-window.addEventListener("load", () => {             document.getElementById("room-selection-container").classList.remove("hidden");
-    document.getElementById("card-selection-container").classList.add("hidden");                    document.getElementById("game-board-container").classList.add("hidden");                    }); 
+                     
                  
 function showPage(pageId) {
   // Hide all top-level page sections
@@ -784,7 +783,11 @@ function showPage(pageId) {
   } else if (pageId === 'profile-section') {
     ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
   } else if (pageId === 'game-section') {
+    document.getElementById("room-selection-container").classList.remove("hidden");
+    document.getElementById("card-selection-container").classList.add("hidden");
+    document.getElementById("game-board-container").classList.add("hidden");
     ws.send(JSON.stringify({ type: 'get_room_status' }));
+
   }
 }
 
@@ -802,6 +805,11 @@ document.querySelectorAll('#hamburger-menu a').forEach(link => {
     document.getElementById('hamburger-menu').classList.add('hidden');
   });
 });       
+
+window.addEventListener("load", () => {
+    showPage('game-section');
+});
+
 
         function showWalletTab(tabId) {
             const tabs = {
