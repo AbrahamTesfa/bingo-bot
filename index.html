@@ -796,7 +796,19 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 });
 });                     
                  
-
+// Navbar functionality
+document.querySelectorAll('.navbar-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const pageId = item.getAttribute('data-page');
+    showPage(pageId);
+    
+    // Update active state
+    document.querySelectorAll('.navbar-item').forEach(nav => 
+      nav.classList.remove('active')
+    );
+    item.classList.add('active');
+  });
+});
 
 
 
