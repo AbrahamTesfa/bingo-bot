@@ -754,61 +754,50 @@ if (startGameBtn) {
   });
 }
 
-                     
-                 
+// Function to switch pages using "hidden"
 function showPage(pageId) {
-  // Hide all top-level page sections
-  pageSections.forEach(sec => sec.classList.add('hidden'));
+// Hide all sections
+document.querySelectorAll('.page-section').forEach(sec => {
+sec.classList.add('hidden');
+});
 
-  // Remove active class from navbar items (visual)
-  navItems.forEach(item => item.classList.remove('active'));
+// Show selected section
+const target = document.getElementById(pageId);
+if (target) target.classList.remove('hidden');
 
-  // Show requested page
-  const target = document.getElementById(pageId);
-  if (!target) return;
-  target.classList.remove('hidden');
-
-  // Mark the navbar item active (if exists)
-  const navItem = Array.from(navItems).find(n => n.dataset.page === pageId);
-  if (navItem) navItem.classList.add('active');
-
-  // WebSocket / extra logic
-  if (pageId === 'admin-section') {
-    ws.send(JSON.stringify({ type: 'get_admin_requests' }));
-  } else if (pageId === 'wallet-section') {
-    showWalletTab('deposit');
-    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
-  } else if (pageId === 'leaderboard-section') {
-    ws.send(JSON.stringify({ type: 'get_leaderboard' }));
-  } else if (pageId === 'profile-section') {
-    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
-  } else if (pageId === 'game-section') {
-    document.getElementById("room-selection-container").classList.remove("hidden");
-    document.getElementById("card-selection-container").classList.add("hidden");
-    document.getElementById("game-board-container").classList.add("hidden");
-    ws.send(JSON.stringify({ type: 'get_room_status' }));
-
-  }
+// WebSocket logic
+if (pageId === 'admin-section') {
+ws.send(JSON.stringify({ type: 'get_admin_requests' }));
+} else if (pageId === 'wallet-section') {
+showWalletTab('deposit');
+ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+} else if (pageId === 'leaderboard-section') {
+ws.send(JSON.stringify({ type: 'get_leaderboard' }));
+} else if (pageId === 'profile-section') {
+ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
+} else if (pageId === 'game-section') {
+ws.send(JSON.stringify({ type: 'get_room_status' }));
+}
 }
 
-// attach navbar clicks
-navItems.forEach(item => {
-  item.addEventListener('click', () => showPage(item.dataset.page));
-});
-
-
+// Handle hamburger menu click
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const pageId = link.getAttribute('data-page');
-    showPage(pageId);
-    document.getElementById('hamburger-menu').classList.add('hidden');
-  });
-});       
+link.addEventListener('click', e => {
+e.preventDefault();
 
-window.addEventListener("load", () => {
-    showPage('game-section');
+const pageId = link.getAttribute('data-page');  
+
+// Use our unified function  
+showPage(pageId);  
+
+// Close menu  
+document.getElementById('hamburger-menu').classList.add('hidden');
+
 });
+});                     
+                 
+
+
 
 
         function showWalletTab(tabId) {
