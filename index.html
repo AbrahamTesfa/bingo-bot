@@ -317,7 +317,7 @@
      
     <main class="container mx-auto p-4 flex-grow w-full max-w-lg">
         <!-- Game Section -->
-        <div id="game-section" class="page-section  pt-4 active">
+        <div id="game-section" class="page-section  pt-4 ">
              
  <!-- Room Selection -->
 <div id="room-selection-container" class="flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
@@ -755,31 +755,35 @@ if (startGameBtn) {
   });
 }
 
-// Function to switch pages using "hidden"
 function showPage(pageId) {
-// Hide all sections
-document.querySelectorAll('.page-section').forEach(sec => {
-sec.classList.add('hidden');
-});
+    // Hide all sections
+    document.querySelectorAll('.page-section').forEach(sec => {
+        sec.classList.add('hidden');
+    });
 
-// Show selected section
-const target = document.getElementById(pageId);
-if (target) target.classList.remove('hidden');
+    // Show selected section
+    const target = document.getElementById(pageId);
+    if (target) target.classList.remove('hidden');
 
-// WebSocket logic
-if (pageId === 'admin-section') {
-ws.send(JSON.stringify({ type: 'get_admin_requests' }));
-} else if (pageId === 'wallet-section') {
-showWalletTab('deposit');
-ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
-} else if (pageId === 'leaderboard-section') {
-ws.send(JSON.stringify({ type: 'get_leaderboard' }));
-} else if (pageId === 'profile-section') {
-ws.send(JSON.stringify({ type: 'get_player_data', userId: myUserId }));
-} else if (pageId === 'game-section') {
-ws.send(JSON.stringify({ type: 'get_room_status' }));
+    // WebSocket logic
+    if (pageId === 'admin-section') {
+        ws.send(JSON.stringify({ type: 'get_admin_requests' }));
+
+    } else if (pageId === 'wallet-section') {
+        showWalletTab('deposit');
+        ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
+
+    } else if (pageId === 'leaderboard-section') {
+        ws.send(JSON.stringify({ type: 'get_leaderboard' }));
+
+    } else if (pageId === 'profile-section') {
+        ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
+
+    } else if (pageId === 'game-section') {
+        ws.send(JSON.stringify({ type: 'get_room_status' }));
+    }
 }
-}
+
 
 // Handle hamburger menu click
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
