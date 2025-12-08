@@ -799,6 +799,13 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 
 });
 });                     
+
+document.querySelectorAll(".room-card").forEach(room => {
+    room.addEventListener("click", () => {
+        generateCardSelectionGrid();
+        showCardSelection();
+    });
+});
                  
 
 
