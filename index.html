@@ -778,7 +778,7 @@ function showPage(pageId) {
         document.getElementById("room-selection-container").classList.remove("hidden");
         document.getElementById("card-selection-container").classList.add("hidden");
         document.getElementById("game-board-container").classList.add("hidden");
-        document.getElementById("card-selection-grid").classList.add("hidden");
+        
         ws.send(JSON.stringify({ type: 'get_room_status' }));
     }
 }
@@ -802,7 +802,7 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 
 document.querySelectorAll(".room-card").forEach(room => {
     room.addEventListener("click", () => {
-        generateCardSelectionGrid();
+        generateCardSelection();
         showCardSelection();
     });
 });
