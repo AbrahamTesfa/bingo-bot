@@ -321,7 +321,7 @@
              
  <!-- Room Selection -->
 <div id="room-selection-container" class="flex flex-col gap-2 mt-4 max-w-2xl mx-auto">
-<div class="w-full mt-2">
+<div class="w-full mt-2">      
   <img src="banner3.png" alt="Bingo Banner" class="w-full max-w-full h-auto object-contain rounded-lg mx-auto" />
 </div>
   <!-- Header -->
@@ -797,20 +797,6 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 });
 });                     
                  
-// Navbar functionality
-document.querySelectorAll('.navbar-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const pageId = item.getAttribute('data-page');
-    showPage(pageId);
-    
-    // Update active state
-    document.querySelectorAll('.navbar-item').forEach(nav => 
-      nav.classList.remove('active')
-    );
-    item.classList.add('active');
-  });
-});
-
 
 
         function showWalletTab(tabId) {
