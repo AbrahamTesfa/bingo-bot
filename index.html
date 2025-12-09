@@ -801,12 +801,16 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 });                     
 
 document.querySelectorAll(".room-card").forEach(room => {
-    room.addEventListener("click", () => {
-        generateCardSelection();
-        
-    });
-});
-                 
+  room.addEventListener("click", () => {
+    const roomId = room.dataset.room;
+
+    ws.send(JSON.stringify({
+      type: "join_room",
+      roomId: roomId,
+      phone: myPhone
+    }));
+  });
+});                 
 
 
         function showWalletTab(tabId) {
