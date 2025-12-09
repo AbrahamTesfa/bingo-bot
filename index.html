@@ -748,18 +748,6 @@ if (startGameBtn) {
   });
 }
 
-document.querySelectorAll(".room-card").forEach(room => {
-  room.addEventListener("click", () => {
-    const roomId = room.dataset.room;
-
-    ws.send(JSON.stringify({
-      type: "join_room",
-      roomId: roomId,
-      phone: myPhone
-    }));
-  });
-});
-
 
 function showPage(pageId) {
     // Hide ALL top-level pages
@@ -795,7 +783,10 @@ function showPage(pageId) {
         ws.send(JSON.stringify({ type: 'get_room_status' }));
     }
 }
-   
+
+document.addEventListener("DOMContentLoaded", () => {
+    attachRoomJoinListeners();
+});   
 
 // Handle hamburger menu click
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
