@@ -748,6 +748,19 @@ if (startGameBtn) {
   });
 }
 
+document.querySelectorAll(".room-card").forEach(room => {
+  room.addEventListener("click", () => {
+    const roomId = room.dataset.room;
+
+    ws.send(JSON.stringify({
+      type: "join_room",
+      roomId: roomId,
+      phone: myPhone
+    }));
+  });
+});
+
+
 function showPage(pageId) {
     // Hide ALL top-level pages
     document.querySelectorAll('.page-section').forEach(sec => {
@@ -800,17 +813,6 @@ document.getElementById('hamburger-menu').classList.add('hidden');
 });
 });                     
 
-document.querySelectorAll(".room-card").forEach(room => {
-  room.addEventListener("click", () => {
-    const roomId = room.dataset.room;
-
-    ws.send(JSON.stringify({
-      type: "join_room",
-      roomId: roomId,
-      phone: myPhone
-    }));
-  });
-});                 
 
 
         function showWalletTab(tabId) {
