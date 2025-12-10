@@ -784,9 +784,6 @@ function showPage(pageId) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    attachRoomJoinListeners();
-});   
 
 // Handle hamburger menu click
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
@@ -1075,18 +1072,38 @@ function updateGameInfoFromStatus(status) {
         // Populate room selection listeners
         // ===== Room Join Logic =====
         
-       // Room join button listener — do NOT toggle UI immediately
-function attachRoomJoinListeners() {  
-  document.querySelectorAll('.room-card button').forEach(button => {                                button.removeEventListener && button.removeEventListener('click', () => {}); // safe remove  
-    button.addEventListener('click', (e) => {  
-      e.stopPropagation();  
-      const card = button.closest('.room-card');      if (!card) return;  
-      const roomId = card.dataset.room;               currentRoomId = roomId;                         ws.send(JSON.stringify({ type: 'join_room', roomId, phone: myPhone }));                       if (roomSelectionContainer) roomSelectionContainer.classList.add('hidden');  
-      // Just ask to join — wait for server to confirm
-if (roomSelectionContainer) roomSelectionContainer.classList.add('hidden');
+       function attachRoomJoinListeners() {
+  document.querySelectorAll('.room-card button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
 
-// The server will send "show_cards" when ready  
-    });                                           });                                           }  
+      const card = button.closest('.room-card');
+      if (!card) return;
+
+      const roomId = card.dataset.room;
+      currentRoomId = roomId;
+
+      // Ask server to join
+      ws.send(JSON.stringify({
+        type: 'join_room',
+        roomId,
+        phone: myPhone
+      }));
+
+      // Hide room selection
+      roomSelectionContainer.classList.add("hidden");
+
+      // SHOW card selection (you forgot this!)
+      cardSelectionContainer.classList.remove("hidden");
+
+      // Request cards from server
+      ws.send(JSON.stringify({
+        type: "get_cards",
+        roomId: currentRoomId
+      }));
+    });
+  });
+}                                           });                                           }  
 
 function initializeApp() {
   attachRoomJoinListeners();
