@@ -23,6 +23,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
         
+
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+
         .navbar {
             position: fixed;
             bottom: 0;
@@ -749,15 +754,13 @@ if (startGameBtn) {
 }
 
 
-function showPage(pageId) {
-    // Hide ALL top-level pages
-    document.querySelectorAll('.page-section').forEach(sec => {
-        sec.classList.add('hidden');
-    });
 
-    // Show selected page
-    const target = document.getElementById(pageId);
-    if (target) target.classList.remove('hidden');
+function showPage(pageId) {
+    // Hide all pages
+    document.querySelectorAll(".page-section").forEach(p => p.classList.remove("active"));
+
+    // Show only selected page
+    document.getElementById(pageId).classList.add("active");
 
     // Handle special pages
     if (pageId === 'admin-section') {
