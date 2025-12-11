@@ -1074,7 +1074,8 @@ function updateGameInfoFromStatus(status) {
         
        function attachRoomJoinListeners() {
   document.querySelectorAll('.room-card button').forEach(button => {
-    button.addEventListener('click', (e) => {
+
+    button.onclick = (e) => {
       e.stopPropagation();
 
       const card = button.closest('.room-card');
@@ -1083,27 +1084,15 @@ function updateGameInfoFromStatus(status) {
       const roomId = card.dataset.room;
       currentRoomId = roomId;
 
-      // Ask server to join
+      // Just ask server — DO NOT hide UI yet
       ws.send(JSON.stringify({
         type: 'join_room',
         roomId,
         phone: myPhone
       }));
-
-      // Hide room selection
-      roomSelectionContainer.classList.add("hidden");
-
-      // SHOW card selection (you forgot this!)
-      cardSelectionContainer.classList.remove("hidden");
-
-      // Request cards from server
-      ws.send(JSON.stringify({
-        type: "get_cards",
-        roomId: currentRoomId
-      }));
-    });
+    };
   });
-}                                           });                                           }  
+}                                           }  
 
 function initializeApp() {
   attachRoomJoinListeners();
