@@ -1071,28 +1071,38 @@ function updateGameInfoFromStatus(status) {
 
         // Populate room selection listeners
         // ===== Room Join Logic =====
-        
+
        function attachRoomJoinListeners() {
   document.querySelectorAll('.room-card button').forEach(button => {
-
-    button.onclick = (e) => {
+    button.addEventListener('click', (e) => {
       e.stopPropagation();
 
       const card = button.closest('.room-card');
-      if (!card) return;
-
+      if (!card) return;                             
       const roomId = card.dataset.room;
       currentRoomId = roomId;
 
-      // Just ask server — DO NOT hide UI yet
+      // Ask server to join
       ws.send(JSON.stringify({
         type: 'join_room',
         roomId,
         phone: myPhone
+      }));                                           
+      // Hide room selection
+      roomSelectionContainer.classList.add("hidden");
+
+      // SHOW card selection (you forgot this!)
+      cardSelectionContainer.classList.remove("hidden");
+
+      // Request cards from server
+      ws.send(JSON.stringify({
+        type: "get_cards",
+        roomId: currentRoomId
       }));
-    };
+    });
   });
-}                                           }  
+}                                           });                                           }
+        
 
 function initializeApp() {
   attachRoomJoinListeners();
