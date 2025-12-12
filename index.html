@@ -758,37 +758,31 @@ if (startGameBtn) {
 
 
 function showPage(pageId) {
-    // Hide all pages
-    document.querySelectorAll(".page-section").forEach(p => p.classList.remove("active"));
+  // hide all sections
+  document.querySelectorAll('.page-section')
+    .forEach(p => p.classList.remove('active'));
 
-    // Show only selected page
-    document.getElementById(pageId).classList.add("active");
+  document.getElementById(pageId)?.classList.add('active');
 
-    // Handle special pages
-    if (pageId === 'admin-section') {
-        ws.send(JSON.stringify({ type: 'get_admin_requests' }));
-
-    } else if (pageId === 'wallet-section') {
-        showWalletTab('deposit');
-        ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
-
-    } else if (pageId === 'leaderboard-section') {
-        ws.send(JSON.stringify({ type: 'get_leaderboard' }));
-
-    } else if (pageId === 'profile-section') {
-        ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
-
-    } else if (pageId === 'game-section') {
-
-        // Restore game internal pages
-        document.getElementById("room-selection-container").classList.remove("hidden");
-        document.getElementById("card-selection-container").classList.add("hidden");
-        document.getElementById("game-board-container").classList.add("hidden");
-        
-        ws.send(JSON.stringify({ type: 'get_room_status' }));
-    }
+  // extra logic per page (same as you had)
+  if (pageId === 'admin-section') {
+    ws.send(JSON.stringify({ type: 'get_admin_requests' }));
+  } else if (pageId === 'wallet-section') {
+    showWalletTab('deposit');
+    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
+  } else if (pageId === 'leaderboard-section') {
+    ws.send(JSON.stringify({ type: 'get_leaderboard' }));
+  } else if (pageId === 'profile-section') {
+    ws.send(JSON.stringify({ type: 'get_player_data', phone: myPhone }));
+  } else if (pageId === 'game-section') {
+    document.getElementById("room-selection-container").classList.remove("hidden");
+    document.getElementById("card-selection-container").classList.add("hidden");
+    document.getElementById("game-board-container").classList.add("hidden");
+    ws.send(JSON.stringify({ type: 'get_room_status' }));
+  }
 }
 
+    
 
 // Handle hamburger menu click
 document.querySelectorAll('#hamburger-menu a').forEach(link => {
