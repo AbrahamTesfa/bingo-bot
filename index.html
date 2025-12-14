@@ -1077,50 +1077,42 @@ function updateGameInfoFromStatus(status) {
       e.stopPropagation();
 
       const card = button.closest('.room-card');
-      if (!card) return;                             
+      if (!card) return;
       const roomId = card.dataset.room;
       currentRoomId = roomId;
 
-      // Ask server to join
       ws.send(JSON.stringify({
         type: 'join_room',
         roomId,
         phone: myPhone
-      }));                                           
-      // Hide room selection
-      roomSelectionContainer.classList.add("hidden");
+      }));
 
-      // SHOW card selection (you forgot this!)
+      roomSelectionContainer.classList.add("hidden");
       cardSelectionContainer.classList.remove("hidden");
 
-      // Request cards from server
       ws.send(JSON.stringify({
         type: "get_cards",
         roomId: currentRoomId
       }));
     });
   });
-}                                           });                                           }
-        
+}    
 
 function initializeApp() {
   attachRoomJoinListeners();
-  attachNavbarListeners();
-  attachWalletTabListeners();
-  attachBingoButtonListener();
-  attachDepositFormListener();
-  attachWithdrawFormListener();
-  attachAdminButtonsListener();
-  // Add other initialization code here
+  // attachNavbarListeners();
+  // attachWalletTabListeners();
+  // attachBingoButtonListener();
+  // attachDepositFormListener();
+  // attachWithdrawFormListener();
+  // attachAdminButtonsListener();
 }
 
-// Run initialization once DOM is fully loaded
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initializeApp);
 } else {
   initializeApp();
 }
-
        
         // Event listener for Bingo button
         bingoBtn.addEventListener('click', () => {
@@ -1563,7 +1555,7 @@ case "countdown": {
       showMessage("Someone else called BINGO first. Better luck next time.", "error");
       bingoBtn.disabled = true;
       break;
-l
+
     case "invalid_bingo":
       gameStatusEl.textContent = "Game in progress.";
       showMessage("Sorry, that is not a valid BINGO.", "error");
