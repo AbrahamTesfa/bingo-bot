@@ -974,7 +974,11 @@ case "reject_request": {
 
 // ----- Serve frontend -----
 app.use(express.static(__dirname)); // serve static files like banner2.jpg
-app.get("/", (req, res) => {
+// Serve static files
+
+
+// Handle ALL routes (important for /bingo)
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
