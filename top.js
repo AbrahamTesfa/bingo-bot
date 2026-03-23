@@ -29,7 +29,7 @@ function parseTelebirrMessage(message) {
   // Match transaction number like "Your transaction number is CJ90DLPKBK"
   const txnMatch = message.match(/transaction number is\s*([A-Z0-9]+)/i);
 
-  // Match recipient name like "to NATNAEL GIRMA"
+  // Match recipient name like "to KELEMUA RAHMETO"
   const toMatch = message.match(/to\s+([A-Z\s]+)\s*\(/i);
 
   return {
