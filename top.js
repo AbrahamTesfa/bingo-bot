@@ -409,7 +409,9 @@ function startRoomCountdown(roomId) {
     
             
 // ----- WebSocket -----
-wss.on("connection", ws => {
+  wss.on("connection", ws => {
+  console.log("🔥 WebSocket connected!"); // ✅ ADD THIS LINE
+
   ws.id = uuid();
   console.log(`Client connected: ${ws.id}`);
   // Add to global set
