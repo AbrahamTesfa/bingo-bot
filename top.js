@@ -416,10 +416,22 @@ wss.on("connection", ws => {
   allClients.add(ws);
 
   ws.on("close", () => {
-    // Remove when disconnected
-    allClients.delete(ws);
-    console.log(`Client disconnected: ${ws.id}`);
-  }); 
+  console.log(`Client disconnected: ${ws.id}`);
+
+  allClients.delete(ws);
+
+  const player = players.get(ws);
+  if (player && player.roomId) {
+    const room = rooms[player.roomId];
+    if (room) {
+      room.players = room.players.filter(p => p.phone !== ws.phone);
+      updateRoomStatus();
+    }
+  }
+
+  players.delete(ws);
+});
+
 
   ws.on("message", async msg => {
     let data;
@@ -459,7 +471,9 @@ wss.on("connection", ws => {
   ws.phone = phone;
   ws.isAdmin = adminPhones.includes(phone);
 
-  // ✅ Prepare data to send back to client
+// ✅ ADD THIS LINE
+  players.set(ws, user);
+
   const playerData = {
     type: "player_data",
     phone: user.phone,
@@ -961,19 +975,10 @@ case "reject_request": {
 
 }); 
      
-  ws.on("close", () => {
-    const player = players.get(ws);
-    if (player && player.roomId) {
-      const room = rooms[player.roomId];
-      room.players = room.players.filter(p => p.phone !== ws.phone);
-      updateRoomStatus();
-    }
-    players.delete(ws);
-  });
-});
+  
 
 // ----- Serve frontend -----
-app.use(express.static(__dirname)); // serve static files like banner2.jpg
+app.use(express.static(path.join(__dirname))); // serve static files like banner2.jpg
 // Serve static files
 
 
