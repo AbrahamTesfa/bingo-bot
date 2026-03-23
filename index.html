@@ -640,20 +640,36 @@
   // --- WebSocket Setup ---
   const ws = new WebSocket("wss://ethiochewata.com:3000");
   // --- Generate or Retrieve User Phone ---
-  function getUserPhone() {
+    function getUserPhone() {
   let phone = localStorage.getItem('bingoPhone');
 
-  // If phone not found or invalid, ask again
   while (!phone || phone === "null" || phone.trim() === "") {
     phone = prompt("Please enter your phone number (e.g. 0912345678):");
+
     if (phone && phone.trim() !== "") {
-      localStorage.setItem('bingoPhone', phone.trim());
+      phone = phone.trim();
+
+      // ✅ normalize
+      if (phone.startsWith("+251")) {
+        phone = "0" + phone.slice(4);
+      } else if (phone.startsWith("251")) {
+        phone = "0" + phone.slice(3);
+      }
+
+      // ✅ validate
+      if (!/^09\d{8}$/.test(phone)) {
+        alert("Invalid phone. Use 09XXXXXXXX");
+        phone = null;
+        continue;
+      }
+
+      localStorage.setItem('bingoPhone', phone);
       break;
     }
   }
 
   return phone;
-}
+        }                      
 
   // --- Detect if Admin ---
   const adminPhones = ["0912735222"];
