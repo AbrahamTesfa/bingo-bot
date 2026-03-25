@@ -678,6 +678,7 @@
 
   // --- When Connected ---
   ws.addEventListener("open", () => {
+  alert("✅ WebSocket Connected");
     console.log("✅ Connected to server as", IS_ADMIN ? "Admin" : "Player");
     ws.send(JSON.stringify({
       type: "get_player_data",
