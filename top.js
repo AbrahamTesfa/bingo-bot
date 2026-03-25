@@ -9,6 +9,11 @@ const { v4: uuid } = require("uuid");
 const { Low } = require("lowdb");
 const { JSONFile } = require("lowdb/node");
 const fs = require('fs');
+
+function logEvent(message) {
+  const line = `[${new Date().toISOString()}] ${message}\n`;
+  fs.appendFileSync("debug.log", line);
+}
 let fixedCardsSet = [];
 // ----- Lowdb Setup -----
 const adapter = new JSONFile("bingo.json");
